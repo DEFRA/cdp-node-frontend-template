@@ -29,7 +29,7 @@ function context(request) {
     getAssetPath: function (asset) {
       const webpackAssetPath = webpackManifest[asset]
 
-      return `${appPathPrefix}/${assetPath}/${webpackAssetPath}`
+      return `${appPathPrefix}${assetPath}/${webpackAssetPath}`
     }
   }
 }

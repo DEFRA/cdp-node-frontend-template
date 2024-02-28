@@ -28,7 +28,7 @@ const serveStaticFiles = {
             }
           },
           method: 'GET',
-          path: '/public/{param*}',
+          path: `${config.get('assetPath')}/{param*}`,
           handler: {
             directory: {
               path: '.',

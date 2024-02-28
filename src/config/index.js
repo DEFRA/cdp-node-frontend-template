@@ -35,7 +35,7 @@ const config = convict({
   assetPath: {
     doc: 'Asset path',
     format: String,
-    default: 'public',
+    default: '/public',
     env: 'ASSET_PATH'
   },
   appPathPrefix: {
