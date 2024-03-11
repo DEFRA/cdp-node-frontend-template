@@ -1,13 +1,11 @@
-import { config } from '~/src/config'
-
-const appPathPrefix = config.get('appPathPrefix')
+import { sanitiseAppPath } from 'src/server/common/helpers/sanitise-url-path.js'
 
 function buildNavigation(request) {
   return [
     {
       text: 'Home',
-      url: appPathPrefix,
-      isActive: request.path === appPathPrefix
+      url: sanitiseAppPath('/'),
+      isActive: request.path === sanitiseAppPath('/')
     }
   ]
 }
