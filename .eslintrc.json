@@ -6,7 +6,7 @@
     "node": true,
     "jest": true
   },
-  "extends": ["standard", "prettier"],
+  "extends": ["standard", "prettier", "plugin:jest-formatting/recommended"],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest"
