@@ -1,7 +1,14 @@
 import convict from 'convict'
-import path from 'path'
+import path from 'node:path'
+
+import { appPathPrefixConfigValidation } from '~/src/server/common/helpers/app-path-prefix/config-validation'
 
 const oneWeek = 7 * 24 * 60 * 60 * 1000
+
+convict.addFormat({
+  name: 'app-path-prefix',
+  validate: appPathPrefixConfigValidation
+})
 
 const config = convict({
   env: {
@@ -39,8 +46,8 @@ const config = convict({
     env: 'ASSET_PATH'
   },
   appPathPrefix: {
-    doc: 'Application url path prefix',
-    format: String,
+    doc: 'Optional application url path prefix',
+    format: 'app-path-prefix',
     default: '',
     env: 'APP_PATH_PREFIX'
   },
