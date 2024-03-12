@@ -23,13 +23,13 @@ try {
 function context(request) {
   return {
     serviceName: config.get('serviceName'),
-    serviceUrl: '/',
     breadcrumbs: [],
     navigation: buildNavigation(request),
+    withPrefix: request.withPrefix,
     getAssetPath: function (asset) {
       const webpackAssetPath = webpackManifest[asset]
 
-      return `${assetPath}/${webpackAssetPath}`
+      return request.withPrefix(`${assetPath}/${webpackAssetPath}`)
     }
   }
 }

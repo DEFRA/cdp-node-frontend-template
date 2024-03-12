@@ -7,8 +7,10 @@ import { router } from './router'
 import { requestLogger } from '~/src/server/common/helpers/logging/request-logger'
 import { catchAll } from '~/src/server/common/helpers/errors'
 import { secureContext } from '~/src/server/common/helpers/secure-context'
+import { withPrefix } from '~/src/server/common/helpers/app-path-prefix/with-prefix'
 
 const isProduction = config.get('isProduction')
+const appPathPrefix = config.get('appPathPrefix')
 
 async function createServer() {
   const server = hapi.server({
@@ -38,13 +40,21 @@ async function createServer() {
     }
   })
 
+  server.decorate('request', 'withPrefix', withPrefix)
+
   await server.register(requestLogger)
 
   if (isProduction) {
     await server.register(secureContext)
   }
 
-  await server.register(router)
+  if (!appPathPrefix) {
+    await server.register(router)
+  } else {
+    await server.register(router, {
+      routes: { prefix: appPathPrefix }
+    })
+  }
 
   await server.register(nunjucksConfig)
 

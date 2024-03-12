@@ -6,7 +6,7 @@ const homeController = {
       breadcrumbs: [
         {
           text: 'Home',
-          href: '/'
+          href: request.withPrefix('/')
         },
         {
           text: 'Example'
