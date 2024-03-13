@@ -1,9 +1,15 @@
 import { buildNavigation } from '~/src/config/nunjucks/context/build-navigation'
-import { withPrefix } from '~/src/server/common/helpers/app-path-prefix/with-prefix'
+import { withPathPrefixDecorator } from '~/src/server/common/helpers/app-path-prefix/with-path-prefix-decorator'
 
 const mockRequest = ({ path = '', appPathPrefix } = {}) => ({
   path,
-  withPrefix: (url) => withPrefix(url, appPathPrefix)
+  withPathPrefix: withPathPrefixDecorator({
+    server: {
+      app: {
+        appPathPrefix
+      }
+    }
+  })
 })
 
 describe('#buildNavigation', () => {

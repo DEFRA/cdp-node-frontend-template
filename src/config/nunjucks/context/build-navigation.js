@@ -2,13 +2,13 @@ function buildNavigation(request) {
   return [
     {
       text: 'Home',
-      url: request.withPrefix('/'),
-      isActive: request.path === request.withPrefix('/')
+      url: request.withPathPrefix('/'),
+      isActive: request.path === request.withPathPrefix('/')
     },
     {
       text: 'About',
-      url: request.withPrefix('/about'),
-      isActive: request.path === request.withPrefix('/about')
+      url: request.withPathPrefix('/about'),
+      isActive: request.path === request.withPathPrefix('/about')
     }
   ]
 }

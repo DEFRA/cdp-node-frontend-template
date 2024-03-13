@@ -11,6 +11,8 @@ const router = {
     register: async (server) => {
       await server.register([inert])
       await server.register([health, home, about, serveStaticFiles])
+
+      server.app.appPathPrefix = server.realm.modifiers.route?.prefix
     }
   }
 }

@@ -1,7 +1,6 @@
 import { config } from '~/src/config'
 import { createServer } from '~/src/server'
 import { createLogger } from '~/src/server/common/helpers/logging/logger'
-import { withPrefix } from '~/src/server/common/helpers/app-path-prefix/with-prefix'
 
 const logger = createLogger()
 
@@ -15,9 +14,11 @@ async function startServer() {
   const server = await createServer()
   await server.start()
 
+  const appPathPrefix = server.app.appPathPrefix
+
   server.logger.info('Server started successfully')
   server.logger.info(
-    `Access your frontend on http://localhost:${config.get('port')}${withPrefix('')}`
+    `Access your frontend on http://localhost:${config.get('port')}${appPathPrefix ?? ''}`
   )
 }
 

@@ -7,7 +7,7 @@ import { router } from './router'
 import { requestLogger } from '~/src/server/common/helpers/logging/request-logger'
 import { catchAll } from '~/src/server/common/helpers/errors'
 import { secureContext } from '~/src/server/common/helpers/secure-context'
-import { withPrefix } from '~/src/server/common/helpers/app-path-prefix/with-prefix'
+import { withPathPrefixDecorator } from '~/src/server/common/helpers/app-path-prefix/with-path-prefix-decorator'
 
 const isProduction = config.get('isProduction')
 const appPathPrefix = config.get('appPathPrefix')
@@ -40,9 +40,12 @@ async function createServer() {
     }
   })
 
-  server.decorate('request', 'withPrefix', withPrefix)
-
+  // Add logging plugin before everything else
   await server.register(requestLogger)
+
+  server.decorate('request', 'withPathPrefix', withPathPrefixDecorator, {
+    apply: true
+  })
 
   if (isProduction) {
     await server.register(secureContext)

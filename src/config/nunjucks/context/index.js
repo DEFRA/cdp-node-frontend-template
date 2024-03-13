@@ -25,11 +25,11 @@ function context(request) {
     serviceName: config.get('serviceName'),
     breadcrumbs: [],
     navigation: buildNavigation(request),
-    withPrefix: request.withPrefix,
+    withPathPrefix: request.withPathPrefix,
     getAssetPath: function (asset) {
       const webpackAssetPath = webpackManifest[asset]
 
-      return request.withPrefix(`${assetPath}/${webpackAssetPath}`)
+      return request.withPathPrefix(`${assetPath}/${webpackAssetPath}`)
     }
   }
 }
