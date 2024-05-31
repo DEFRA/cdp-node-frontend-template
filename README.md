@@ -121,6 +121,19 @@ Run:
 docker run -p 3000:3000 cdp-node-frontend-template
 ```
 
+### Docker Compose
+
+A local environment with:
+* Localstack for AWS services (S3, SQS)
+* Redis
+* MongoDB
+* This service.
+* A commented out backend example.
+
+```bash
+docker compose up --build -d
+```
+
 ## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
