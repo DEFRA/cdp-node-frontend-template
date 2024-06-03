@@ -14,8 +14,7 @@ module.exports = {
     '<rootDir>/.server',
     '<rootDir>/.public',
     '<rootDir>/src/__fixtures__',
-    '<rootDir>/test-helpers',
-    '<rootDir>/mock-api'
+    '<rootDir>/src/server/common/test-helpers'
   ],
   coverageDirectory: '<rootDir>/coverage'
 }
