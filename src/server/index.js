@@ -9,7 +9,7 @@ import { router } from './router'
 import { requestLogger } from '~/src/server/common/helpers/logging/request-logger'
 import { catchAll } from '~/src/server/common/helpers/errors'
 import { secureContext } from '~/src/server/common/helpers/secure-context'
-import { buildRedisClient } from '~/common/helpers/redis-client'
+import { buildRedisClient } from '~/src/server/common/helpers/redis-client'
 import { sessionCache } from '~/src/server/common/helpers/session-cache/session-cache'
 import { createLogger } from '~/src/server/common/helpers/logging/logger'
 
