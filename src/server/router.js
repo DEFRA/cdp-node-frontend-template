@@ -10,7 +10,15 @@ const router = {
     name: 'router',
     register: async (server) => {
       await server.register([inert])
-      await server.register([health, home, about, serveStaticFiles])
+
+      // Health-check route. Used by platform to check if service is running, do not remove!
+      await server.register([health])
+
+      // Application specific routes, add your own routes here
+      await server.register([home, about])
+
+      // Static assets
+      await server.register([serveStaticFiles])
     }
   }
 }

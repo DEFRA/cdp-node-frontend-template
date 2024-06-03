@@ -1,5 +1,9 @@
 import { aboutController } from '~/src/server/about/controller'
 
+/**
+ * Sets up the routes used in the /about page.
+ * These routes are registered in src/server/router.js.
+ */
 const about = {
   plugin: {
     name: 'about',
