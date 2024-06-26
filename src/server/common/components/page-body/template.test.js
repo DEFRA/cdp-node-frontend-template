@@ -1,6 +1,7 @@
 import { renderComponent } from '~/src/server/common/test-helpers/component-helpers.js'
 
 describe('Page Body Component', () => {
+  /** @type {CheerioAPI} */
   let $pageBody
 
   describe('With child content', () => {
@@ -47,3 +48,7 @@ describe('Page Body Component', () => {
     })
   })
 })
+
+/**
+ * @import { CheerioAPI } from 'cheerio'
+ */

@@ -25,11 +25,19 @@ const nunjucksEnvironment = nunjucks.configure(
   }
 )
 
+/**
+ * @satisfies {ServerRegisterPluginObject<ServerViewsConfiguration>}
+ */
 const nunjucksConfig = {
   plugin: hapiVision,
   options: {
     engines: {
       njk: {
+        /**
+         * @param {string} src
+         * @param {{ environment: typeof nunjucksEnvironment }} options
+         * @returns {(options: ReturnType<Awaited<typeof context>>) => string}
+         */
         compile: (src, options) => {
           const template = nunjucks.compile(src, options.environment)
           return (context) => template.render(context)
@@ -55,3 +63,8 @@ Object.entries(filters).forEach(([name, filter]) => {
 })
 
 export { nunjucksConfig }
+
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ * @import { ServerViewsConfiguration } from '@hapi/vision'
+ */

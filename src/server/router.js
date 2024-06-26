@@ -5,6 +5,9 @@ import { home } from '~/src/server/home/index.js'
 import { serveStaticFiles } from '~/src/server/common/helpers/serve-static-files.js'
 import { about } from '~/src/server/about/index.js'
 
+/**
+ * @satisfies {ServerRegisterPluginObject<void>}
+ */
 const router = {
   plugin: {
     name: 'router',
@@ -24,3 +27,7 @@ const router = {
 }
 
 export { router }
+
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ */

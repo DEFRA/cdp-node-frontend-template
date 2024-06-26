@@ -4,7 +4,10 @@ import { config } from '~/src/config/index.js'
 
 const sessionConfig = config.get('session')
 
-// Set options.maxCookieSize to 0 to always use server-side storage
+/**
+ * Set options.maxCookieSize to 0 to always use server-side storage
+ * @satisfies {ServerRegisterPluginObject<YarOptions>}
+ */
 const sessionCache = {
   plugin: yar,
   options: {
@@ -24,3 +27,8 @@ const sessionCache = {
 }
 
 export { sessionCache }
+
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ * @import { YarOptions } from '@hapi/yar'
+ */

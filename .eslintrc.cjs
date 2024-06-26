@@ -1,3 +1,6 @@
+/**
+ * @type {ESLint.ConfigData}
+ */
 module.exports = {
   ignorePatterns: ['.server', '.public', 'src/__fixtures__', 'coverage'],
   overrides: [
@@ -123,3 +126,7 @@ module.exports = {
   ],
   root: true
 }
+
+/**
+ * @import { ESLint } from 'eslint'
+ */

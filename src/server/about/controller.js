@@ -1,6 +1,7 @@
 /**
  * A GDS styled example about page controller.
  * Provided as an example, remove or modify as required.
+ * @satisfies {Partial<ServerRoute>}
  */
 const aboutController = {
   handler: (request, h) => {
@@ -21,3 +22,7 @@ const aboutController = {
 }
 
 export { aboutController }
+
+/**
+ * @import { ServerRoute } from '@hapi/hapi'
+ */

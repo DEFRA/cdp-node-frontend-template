@@ -16,6 +16,9 @@ const govukFrontendPath = path.dirname(
   require.resolve('govuk-frontend/package.json')
 )
 
+/**
+ * @type {Configuration}
+ */
 export default {
   context: path.resolve(dirname, 'src/client'),
   entry: {
@@ -186,3 +189,7 @@ export default {
   ],
   target: 'browserslist:javascripts'
 }
+
+/**
+ * @import { Configuration } from 'webpack'
+ */

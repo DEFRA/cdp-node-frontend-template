@@ -1,6 +1,7 @@
 /**
  * A GDS styled example home page controller.
  * Provided as an example, remove or modify as required.
+ * @satisfies {Partial<ServerRoute>}
  */
 const homeController = {
   handler: (request, h) => {
@@ -12,3 +13,7 @@ const homeController = {
 }
 
 export { homeController }
+
+/**
+ * @import { ServerRoute } from '@hapi/hapi'
+ */

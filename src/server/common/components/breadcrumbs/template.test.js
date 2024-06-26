@@ -1,6 +1,7 @@
 import { renderComponent } from '~/src/server/common/test-helpers/component-helpers.js'
 
 describe('Breadcrumbs Component', () => {
+  /** @type {Cheerio<Element>} */
   let $breadcrumbs
 
   beforeEach(() => {
@@ -43,3 +44,7 @@ describe('Breadcrumbs Component', () => {
     )
   })
 })
+
+/**
+ * @import { CheerioAPI, Cheerio, Element } from 'cheerio'
+ */

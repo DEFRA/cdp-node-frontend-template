@@ -27,6 +27,11 @@ Object.entries(filters).forEach(([name, filter]) => {
   nunjucksTestEnv.addFilter(name, filter)
 })
 
+/**
+ * @param {string} componentName
+ * @param {object} params
+ * @param {string} [callBlock]
+ */
 function renderComponent(componentName, params, callBlock) {
   const macroPath = `${componentName}/macro.njk`
   const macroName = `app${

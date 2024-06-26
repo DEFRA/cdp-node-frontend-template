@@ -2,6 +2,9 @@ import { ecsFormat } from '@elastic/ecs-pino-format'
 
 import { config } from '~/src/config/index.js'
 
+/**
+ * @satisfies {Options}
+ */
 const loggerOptions = {
   enabled: !config.get('isTest'),
   ignorePaths: ['/health'],
@@ -16,3 +19,7 @@ const loggerOptions = {
 }
 
 export { loggerOptions }
+
+/**
+ * @import { Options } from 'hapi-pino'
+ */

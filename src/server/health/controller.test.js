@@ -1,6 +1,7 @@
 import { createServer } from '~/src/server/index.js'
 
 describe('#healthController', () => {
+  /** @type {Server} */
   let server
 
   beforeAll(async () => {
@@ -22,3 +23,7 @@ describe('#healthController', () => {
     expect(statusCode).toBe(200)
   })
 })
+
+/**
+ * @import { Server } from '@hapi/hapi'
+ */
