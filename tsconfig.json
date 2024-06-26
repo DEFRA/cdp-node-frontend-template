@@ -9,5 +9,5 @@
     "resolveJsonModule": true
   },
   "exclude": [".cache", ".public", ".server", "node_modules"],
-  "include": ["**/*.cjs", "**/*.js"]
+  "include": ["**/*.cjs", "**/*.js", ".eslintrc.*", ".prettierrc.*"]
 }
