@@ -5,7 +5,7 @@ import { config } from '~/src/config/index.js'
 /**
  * @satisfies {Options}
  */
-const loggerOptions = {
+export const loggerOptions = {
   enabled: !config.get('isTest'),
   ignorePaths: ['/health'],
   redact: {
@@ -17,8 +17,6 @@ const loggerOptions = {
     ? { transport: { target: 'pino-pretty' } }
     : ecsFormat())
 }
-
-export { loggerOptions }
 
 /**
  * @import { Options } from 'hapi-pino'

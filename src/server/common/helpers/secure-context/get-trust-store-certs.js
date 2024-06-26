@@ -3,7 +3,7 @@
  * @param {NodeJS.ProcessEnv} envs
  * @returns {string[]}
  */
-const getTrustStoreCerts = (envs) =>
+export const getTrustStoreCerts = (envs) =>
   Object.entries(envs)
     .map(([key, value]) => key.startsWith('TRUSTSTORE_') && value)
     .filter(
@@ -11,5 +11,3 @@ const getTrustStoreCerts = (envs) =>
       (envValue) => Boolean(envValue)
     )
     .map((envValue) => Buffer.from(envValue, 'base64').toString().trim())
-
-export { getTrustStoreCerts }

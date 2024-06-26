@@ -8,7 +8,7 @@ import { homeController } from '~/src/server/home/controller.js'
 /**
  * @satisfies {ServerRegisterPluginObject<void>}
  */
-const home = {
+export const home = {
   plugin: {
     name: 'home',
     register(server) {
@@ -22,8 +22,6 @@ const home = {
     }
   }
 }
-
-export { home }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

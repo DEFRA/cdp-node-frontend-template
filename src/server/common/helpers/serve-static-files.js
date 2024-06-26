@@ -3,7 +3,7 @@ import { config } from '~/src/config/index.js'
 /**
  * @satisfies {ServerRegisterPluginObject<void>}
  */
-const serveStaticFiles = {
+export const serveStaticFiles = {
   plugin: {
     name: 'staticFiles',
     register(server) {
@@ -43,8 +43,6 @@ const serveStaticFiles = {
     }
   }
 }
-
-export { serveStaticFiles }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

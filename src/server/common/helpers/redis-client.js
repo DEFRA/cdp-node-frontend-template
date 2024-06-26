@@ -10,7 +10,7 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  * Environments - Elasticache / Redis Cluster with username and password
  * @returns {Cluster | Redis}
  */
-function buildRedisClient() {
+export function buildRedisClient() {
   const logger = createLogger()
   const port = 6379
   const db = 0
@@ -58,5 +58,3 @@ function buildRedisClient() {
 
   return redisClient
 }
-
-export { buildRedisClient }

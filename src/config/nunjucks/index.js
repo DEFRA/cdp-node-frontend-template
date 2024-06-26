@@ -28,7 +28,7 @@ const nunjucksEnvironment = nunjucks.configure(
 /**
  * @satisfies {ServerRegisterPluginObject<ServerViewsConfiguration>}
  */
-const nunjucksConfig = {
+export const nunjucksConfig = {
   plugin: hapiVision,
   options: {
     engines: {
@@ -61,8 +61,6 @@ Object.entries(globals).forEach(([name, global]) => {
 Object.entries(filters).forEach(([name, filter]) => {
   nunjucksEnvironment.addFilter(name, filter)
 })
-
-export { nunjucksConfig }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

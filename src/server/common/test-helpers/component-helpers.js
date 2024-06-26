@@ -32,7 +32,7 @@ Object.entries(filters).forEach(([name, filter]) => {
  * @param {object} params
  * @param {string} [callBlock]
  */
-function renderComponent(componentName, params, callBlock) {
+export function renderComponent(componentName, params, callBlock) {
   const macroPath = `${componentName}/macro.njk`
   const macroName = `app${
     componentName.charAt(0).toUpperCase() + camelCase(componentName.slice(1))
@@ -48,5 +48,3 @@ function renderComponent(componentName, params, callBlock) {
 
   return load(nunjucksTestEnv.renderString(macroString, {}))
 }
-
-export { renderComponent }

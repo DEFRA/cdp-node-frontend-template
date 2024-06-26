@@ -3,7 +3,7 @@
  * Provided as an example, remove or modify as required.
  * @satisfies {Partial<ServerRoute>}
  */
-const aboutController = {
+export const aboutController = {
   handler(request, h) {
     return h.view('about/index', {
       pageTitle: 'About',
@@ -20,8 +20,6 @@ const aboutController = {
     })
   }
 }
-
-export { aboutController }
 
 /**
  * @import { ServerRoute } from '@hapi/hapi'

@@ -15,7 +15,7 @@ const nonProxyFetch = (url, opts) => {
  * @param {string} url
  * @param {Partial<RequestInit>} opts
  */
-const proxyFetch = (url, opts) => {
+export const proxyFetch = (url, opts) => {
   const proxy = config.get('httpsProxy') ?? config.get('httpProxy')
   if (!proxy) {
     return nonProxyFetch(url, opts)
@@ -30,8 +30,6 @@ const proxyFetch = (url, opts) => {
     })
   }
 }
-
-export { proxyFetch }
 
 /**
  * @import { RequestInit } from 'undici'

@@ -20,7 +20,7 @@ function statusCodeMessage(statusCode) {
  * @param {Request} request
  * @param {ResponseToolkit} h
  */
-function catchAll(request, h) {
+export function catchAll(request, h) {
   const { response } = request
 
   if (!('isBoom' in response)) {
@@ -40,8 +40,6 @@ function catchAll(request, h) {
     })
     .code(statusCode)
 }
-
-export { catchAll }
 
 /**
  * @import { Request, ResponseToolkit } from '@hapi/hapi'

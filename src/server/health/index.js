@@ -3,7 +3,7 @@ import { healthController } from '~/src/server/health/controller.js'
 /**
  * @satisfies {ServerRegisterPluginObject<void>}
  */
-const health = {
+export const health = {
   plugin: {
     name: 'health',
     register(server) {
@@ -15,8 +15,6 @@ const health = {
     }
   }
 }
-
-export { health }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

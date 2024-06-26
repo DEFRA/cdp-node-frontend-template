@@ -5,12 +5,10 @@ import { loggerOptions } from '~/src/server/common/helpers/logging/logger-option
 /**
  * @satisfies {ServerRegisterPluginObject<Options>}
  */
-const requestLogger = {
+export const requestLogger = {
   plugin: hapiPino,
   options: loggerOptions
 }
-
-export { requestLogger }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

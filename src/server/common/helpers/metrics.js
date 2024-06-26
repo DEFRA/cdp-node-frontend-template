@@ -10,7 +10,7 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  * @param {string} metricName
  * @param {number} value
  */
-const counter = async (metricName, value = 1) => {
+export const counter = async (metricName, value = 1) => {
   const logger = createLogger()
   if (!config.get('isProduction')) return
 
@@ -22,5 +22,3 @@ const counter = async (metricName, value = 1) => {
     logger.warn(e)
   }
 }
-
-export { counter }

@@ -15,7 +15,7 @@ const manifestPath = path.join(
 /**
  * @param {Request | null} request
  */
-function context(request) {
+export function context(request) {
   /** @type {Record<string, string> | undefined} */
   let webpackManifest
 
@@ -42,8 +42,6 @@ function context(request) {
     }
   }
 }
-
-export { context }
 
 /**
  * @import { Request } from '@hapi/hapi'

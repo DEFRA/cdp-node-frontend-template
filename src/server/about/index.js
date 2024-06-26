@@ -5,7 +5,7 @@ import { aboutController } from '~/src/server/about/controller.js'
  * These routes are registered in src/server/router.js.
  * @satisfies {ServerRegisterPluginObject<void>}
  */
-const about = {
+export const about = {
   plugin: {
     name: 'about',
     register(server) {
@@ -19,8 +19,6 @@ const about = {
     }
   }
 }
-
-export { about }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

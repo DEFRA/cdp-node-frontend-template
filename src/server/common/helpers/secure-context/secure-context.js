@@ -5,7 +5,7 @@ import { getTrustStoreCerts } from '~/src/server/common/helpers/secure-context/g
 /**
  * @satisfies {ServerRegisterPluginObject<void>}
  */
-const secureContext = {
+export const secureContext = {
   plugin: {
     name: 'secure-context',
     register(server) {
@@ -34,8 +34,6 @@ const secureContext = {
     }
   }
 }
-
-export { secureContext }
 
 /**
  * @import { ServerRegisterPluginObject } from '@hapi/hapi'

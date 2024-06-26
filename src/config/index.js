@@ -8,7 +8,7 @@ const oneHour = 1000 * 60 * 60
 const fourHours = oneHour * 4
 const oneWeekMillis = oneHour * 24 * 7
 
-const config = convict({
+export const config = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -151,5 +151,3 @@ const config = convict({
 })
 
 config.validate({ allowed: 'strict' })
-
-export { config }

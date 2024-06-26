@@ -1,4 +1,4 @@
-const productsFixture = [
+export const productsFixture = [
   {
     id: '14be9663-e19b-4dd1-b606-8fa1a5094ba5',
     owner: 'Farmer Giles',
@@ -30,5 +30,3 @@ const productsFixture = [
       'Brand new Farm Master, to master your farm. You just need to press go and it will take care of the rest.'
   }
 ]
-
-export { productsFixture }
