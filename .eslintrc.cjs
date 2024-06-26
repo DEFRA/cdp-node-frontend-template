@@ -108,8 +108,9 @@ module.exports = {
         'jest/globals': true
       },
       extends: [
+        'plugin:jest-formatting/recommended',
         'plugin:jest/recommended',
-        'plugin:jest-formatting/recommended'
+        'plugin:jest/style'
       ],
       files: ['**/*.test.{cjs,js}'],
       plugins: ['jest'],
