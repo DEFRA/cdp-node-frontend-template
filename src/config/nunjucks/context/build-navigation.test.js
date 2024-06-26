@@ -3,9 +3,9 @@ import { buildNavigation } from '~/src/config/nunjucks/context/build-navigation.
 /**
  * @param {Partial<Request>} [options]
  */
-const mockRequest = (options) => ({
-  ...options
-})
+function mockRequest(options) {
+  return { ...options }
+}
 
 describe('#buildNavigation', () => {
   test('Should provide expected navigation details', () => {

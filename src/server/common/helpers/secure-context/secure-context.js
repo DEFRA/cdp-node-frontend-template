@@ -11,7 +11,7 @@ export const secureContext = {
     register(server) {
       const originalCreateSecureContext = tls.createSecureContext
 
-      tls.createSecureContext = (options = {}) => {
+      tls.createSecureContext = function (options = {}) {
         const trustStoreCerts = getTrustStoreCerts(process.env)
 
         if (!trustStoreCerts.length) {
