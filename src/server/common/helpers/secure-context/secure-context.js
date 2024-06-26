@@ -21,6 +21,7 @@ const secureContext = {
         const secureContext = originalCreateSecureContext(options)
 
         trustStoreCerts.forEach((cert) => {
+          // eslint-disable-next-line -- Node.js API not documented
           secureContext.context.addCACert(cert)
         })
 

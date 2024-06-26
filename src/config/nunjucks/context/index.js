@@ -20,6 +20,7 @@ function context(request) {
   let webpackManifest
 
   try {
+    // eslint-disable-next-line -- Allow JSON type 'any'
     webpackManifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
   } catch (error) {
     logger.error('Webpack Manifest assets file not found')
