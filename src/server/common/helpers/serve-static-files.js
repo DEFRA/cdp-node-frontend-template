@@ -6,7 +6,7 @@ import { config } from '~/src/config/index.js'
 const serveStaticFiles = {
   plugin: {
     name: 'staticFiles',
-    register: (server) => {
+    register(server) {
       server.route([
         {
           options: {
@@ -18,7 +18,7 @@ const serveStaticFiles = {
           },
           method: 'GET',
           path: '/favicon.ico',
-          handler: function (request, h) {
+          handler(request, h) {
             return h.response().code(204).type('image/x-icon')
           }
         },

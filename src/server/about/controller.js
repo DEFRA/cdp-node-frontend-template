@@ -4,7 +4,7 @@
  * @satisfies {Partial<ServerRoute>}
  */
 const aboutController = {
-  handler: (request, h) => {
+  handler(request, h) {
     return h.view('about/index', {
       pageTitle: 'About',
       heading: 'About',

@@ -36,7 +36,7 @@ function context(request) {
     /**
      * @param {string} asset
      */
-    getAssetPath: function (asset) {
+    getAssetPath(asset) {
       const webpackAssetPath = webpackManifest?.[asset]
       return `${assetPath}/${webpackAssetPath}`
     }

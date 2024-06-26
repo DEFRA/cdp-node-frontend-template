@@ -11,7 +11,7 @@ import { about } from '~/src/server/about/index.js'
 const router = {
   plugin: {
     name: 'router',
-    register: async (server) => {
+    async register(server) {
       await server.register([inert])
 
       // Health-check route. Used by platform to check if service is running, do not remove!

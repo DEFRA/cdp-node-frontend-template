@@ -4,7 +4,7 @@
  * @satisfies {Partial<ServerRoute>}
  */
 const homeController = {
-  handler: (request, h) => {
+  handler(request, h) {
     return h.view('home/index', {
       pageTitle: 'Home',
       heading: 'Home'

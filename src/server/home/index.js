@@ -11,7 +11,7 @@ import { homeController } from '~/src/server/home/controller.js'
 const home = {
   plugin: {
     name: 'home',
-    register: (server) => {
+    register(server) {
       server.route([
         {
           method: 'GET',
