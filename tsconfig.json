@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "checkJs": true,
     "module": "NodeNext",
     "noEmit": true,
     "paths": {
       "~/*": ["./*"]
     },
     "resolveJsonModule": true,
+    "strict": true,
     "types": ["jest"]
   },
   "exclude": [".cache", ".public", ".server", "coverage", "node_modules"],
