@@ -20,7 +20,7 @@ const nunjucksTestEnv = nunjucks.configure(
 )
 
 Object.keys(globals).forEach((global) => {
-  nunjucksTestEnv.addFilter(global, globals[global])
+  nunjucksTestEnv.addGlobal(global, globals[global])
 })
 
 Object.keys(filters).forEach((filter) => {

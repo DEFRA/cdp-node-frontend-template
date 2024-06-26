@@ -47,7 +47,7 @@ const nunjucksConfig = {
 }
 
 Object.keys(globals).forEach((global) => {
-  nunjucksEnvironment.addFilter(global, globals[global])
+  nunjucksEnvironment.addGlobal(global, globals[global])
 })
 
 Object.keys(filters).forEach((filter) => {
