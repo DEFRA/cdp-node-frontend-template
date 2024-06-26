@@ -6,7 +6,8 @@
     "paths": {
       "~/*": ["./*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "types": ["jest"]
   },
   "exclude": [".cache", ".public", ".server", "coverage", "node_modules"],
   "include": ["**/*.cjs", "**/*.js", ".eslintrc.*", ".prettierrc.*"]

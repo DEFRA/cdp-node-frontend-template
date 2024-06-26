@@ -112,7 +112,7 @@ module.exports = {
         'plugin:jest/recommended',
         'plugin:jest/style'
       ],
-      files: ['**/*.test.{cjs,js}'],
+      files: ['**/*.test.{cjs,js}', '**/__mocks__/**', '**/jest-setup.js'],
       plugins: ['jest'],
       rules: {
         // Allow Jest to assert on mocked unbound methods
