@@ -12,8 +12,8 @@ module.exports = {
         'plugin:jsdoc/recommended-typescript-flavor',
         'plugin:n/recommended',
         'plugin:promise/recommended',
-        'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/stylistic',
+        'plugin:@typescript-eslint/recommended-type-checked',
+        'plugin:@typescript-eslint/stylistic-type-checked',
         'prettier'
       ],
       env: {
