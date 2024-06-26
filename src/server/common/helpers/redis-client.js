@@ -1,4 +1,4 @@
-import IoRedis from 'ioredis'
+import { Cluster, Redis } from 'ioredis'
 
 import { config } from '~/src/config/index.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
@@ -8,7 +8,6 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  *
  * Local development - 1 Redis instance
  * Environments - Elasticache / Redis Cluster with username and password
- *
  * @returns {Cluster | Redis}
  */
 function buildRedisClient() {
@@ -21,14 +20,14 @@ function buildRedisClient() {
   let redisClient
 
   if (redisConfig.useSingleInstanceCache) {
-    redisClient = new IoRedis({
+    redisClient = new Redis({
       port,
       host,
       db,
       keyPrefix
     })
   } else {
-    redisClient = new IoRedis.Cluster(
+    redisClient = new Cluster(
       [
         {
           host,
