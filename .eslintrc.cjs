@@ -1,64 +1,84 @@
 module.exports = {
-  env: {
-    browser: true,
-    commonjs: true,
-    es2022: true,
-    node: true,
-    jest: true,
-    'jest/globals': true
-  },
-  extends: [
-    'standard',
-    'prettier',
-    'plugin:import/recommended',
-    'plugin:jest-formatting/recommended',
-    'plugin:n/recommended',
-    'plugin:promise/recommended'
-  ],
+  ignorePatterns: ['.server', '.public', 'src/__fixtures__', 'coverage'],
   overrides: [
     {
+      extends: [
+        'standard',
+        'plugin:import/recommended',
+        'plugin:n/recommended',
+        'plugin:promise/recommended',
+        'prettier'
+      ],
+      env: {
+        browser: false
+      },
+      files: ['**/*.{cjs,js}'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 'latest'
+      },
+      plugins: ['import', 'n', 'promise', 'prettier'],
+      rules: {
+        'prettier/prettier': [
+          'error',
+          {
+            endOfLine: 'auto'
+          }
+        ],
+        'no-console': 'error',
+
+        // Check for mandatory file extensions
+        // https://nodejs.org/api/esm.html#mandatory-file-extensions
+        'import/extensions': ['error', 'always', { ignorePackages: true }],
+
+        // Skip rules handled by TypeScript compiler
+        'import/default': 'off',
+        'import/namespace': 'off',
+        'n/no-extraneous-require': 'off',
+        'n/no-extraneous-import': 'off',
+        'n/no-missing-require': 'off',
+        'n/no-missing-import': 'off'
+      },
+      settings: {
+        'import/resolver': {
+          node: true,
+          typescript: true
+        }
+      }
+    },
+    {
+      files: ['**/*.js'],
+      parserOptions: {
+        sourceType: 'module'
+      }
+    },
+    {
+      env: {
+        commonjs: true
+      },
       files: ['**/*.cjs'],
       parserOptions: {
         sourceType: 'commonjs'
       }
     },
     {
-      files: ['**/*.test.js'],
-      plugins: ['jest'],
-      extends: ['plugin:jest/recommended', 'plugin:jest-formatting/recommended']
+      env: {
+        browser: true,
+        node: false
+      },
+      files: ['src/client/**/*.js']
+    },
+    {
+      env: {
+        'jest/globals': true
+      },
+      extends: [
+        'plugin:jest/recommended',
+        'plugin:jest-formatting/recommended'
+      ],
+      files: ['**/*.test.{cjs,js}'],
+      plugins: ['jest']
     }
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
-  },
-  plugins: ['import', 'jest', 'jest-formatting', 'n', 'promise', 'prettier'],
-  rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        endOfLine: 'auto'
-      }
-    ],
-    'no-console': 'error',
-
-    // Check for mandatory file extensions
-    // https://nodejs.org/api/esm.html#mandatory-file-extensions
-    'import/extensions': ['error', 'always', { ignorePackages: true }],
-
-    // Skip rules handled by TypeScript compiler
-    'import/default': 'off',
-    'import/namespace': 'off',
-    'n/no-extraneous-require': 'off',
-    'n/no-extraneous-import': 'off',
-    'n/no-missing-require': 'off',
-    'n/no-missing-import': 'off'
-  },
-  settings: {
-    'import/resolver': {
-      node: true,
-      typescript: true
-    }
-  },
-  ignorePatterns: ['.server', '.public', 'src/__fixtures__', 'coverage']
+  root: true
 }
