@@ -12,7 +12,7 @@ const manifestPath = path.join(
   '.public/assets-manifest.json'
 )
 
-async function context(request) {
+function context(request) {
   let webpackManifest
 
   try {

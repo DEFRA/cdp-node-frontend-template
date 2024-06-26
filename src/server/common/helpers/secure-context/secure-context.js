@@ -5,7 +5,7 @@ import { getTrustStoreCerts } from '~/src/server/common/helpers/secure-context/g
 const secureContext = {
   plugin: {
     name: 'secure-context',
-    register: async (server) => {
+    register: (server) => {
       const originalCreateSecureContext = tls.createSecureContext
 
       tls.createSecureContext = (options = {}) => {

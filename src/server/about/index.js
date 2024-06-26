@@ -7,7 +7,7 @@ import { aboutController } from '~/src/server/about/controller.js'
 const about = {
   plugin: {
     name: 'about',
-    register: async (server) => {
+    register: (server) => {
       server.route([
         {
           method: 'GET',
