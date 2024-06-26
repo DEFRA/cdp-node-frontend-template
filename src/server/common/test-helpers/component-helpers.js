@@ -19,12 +19,12 @@ const nunjucksTestEnv = nunjucks.configure(
   }
 )
 
-Object.keys(globals).forEach((global) => {
-  nunjucksTestEnv.addGlobal(global, globals[global])
+Object.entries(globals).forEach(([name, global]) => {
+  nunjucksTestEnv.addGlobal(name, global)
 })
 
-Object.keys(filters).forEach((filter) => {
-  nunjucksTestEnv.addFilter(filter, filters[filter])
+Object.entries(filters).forEach(([name, filter]) => {
+  nunjucksTestEnv.addFilter(name, filter)
 })
 
 function renderComponent(componentName, params, callBlock) {
@@ -41,7 +41,7 @@ function renderComponent(componentName, params, callBlock) {
     macroString += `{{- ${macroName}(${macroParams}) -}}`
   }
 
-  return load(nunjucksTestEnv.renderString(macroString))
+  return load(nunjucksTestEnv.renderString(macroString, {}))
 }
 
 export { renderComponent }

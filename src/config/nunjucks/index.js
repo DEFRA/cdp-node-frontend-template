@@ -46,12 +46,12 @@ const nunjucksConfig = {
   }
 }
 
-Object.keys(globals).forEach((global) => {
-  nunjucksEnvironment.addGlobal(global, globals[global])
+Object.entries(globals).forEach(([name, global]) => {
+  nunjucksEnvironment.addGlobal(name, global)
 })
 
-Object.keys(filters).forEach((filter) => {
-  nunjucksEnvironment.addFilter(filter, filters[filter])
+Object.entries(filters).forEach(([name, filter]) => {
+  nunjucksEnvironment.addFilter(name, filter)
 })
 
 export { nunjucksConfig }

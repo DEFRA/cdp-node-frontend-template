@@ -28,8 +28,7 @@ function context(request) {
     breadcrumbs: [],
     navigation: buildNavigation(request),
     getAssetPath: function (asset) {
-      const webpackAssetPath = webpackManifest[asset]
-
+      const webpackAssetPath = webpackManifest?.[asset]
       return `${assetPath}/${webpackAssetPath}`
     }
   }

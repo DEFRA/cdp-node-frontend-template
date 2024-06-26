@@ -26,7 +26,7 @@ export default {
   experiments: {
     outputModule: true
   },
-  mode: NODE_ENV,
+  mode: NODE_ENV === 'production' ? 'production' : 'development',
   devtool: NODE_ENV === 'production' ? 'source-map' : 'inline-source-map',
   watchOptions: {
     aggregateTimeout: 200,
