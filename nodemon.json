@@ -1,5 +1,8 @@
 {
-  "watch": [".public/assets-manifest.json", "./src"],
+  "watch": ["./src"],
+  "env": {
+    "NODE_ENV": "development"
+  },
   "ignore": ["**/*.test.*", "./src/server/common/test-helpers", "./src/client"],
   "ext": "cjs,js,json"
 }
