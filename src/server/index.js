@@ -54,7 +54,7 @@ async function createServer() {
 
   await server.register([sessionCache, nunjucksConfig])
 
-  // Register all of the controllers/routes defined in src/server/router.js
+  // Register all the controllers/routes defined in src/server/router.js
   await server.register([router])
 
   server.ext('onPreResponse', catchAll)

@@ -111,9 +111,9 @@ const config = convict({
   },
   redis: {
     enabled: {
-      doc: 'Enable Redis on your Frontend. Before you enable Redis, contact the CDP platform team as we need to set up config so you can run Redis in CDP environments',
+      doc: 'Enable Redis on your Frontend.',
       format: Boolean,
-      default: false,
+      default: true,
       env: 'REDIS_ENABLED'
     },
     host: {
