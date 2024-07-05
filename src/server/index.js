@@ -9,6 +9,7 @@ import { catchAll } from '~/src/server/common/helpers/errors.js'
 import { secureContext } from '~/src/server/common/helpers/secure-context/index.js'
 import { sessionCache } from '~/src/server/common/helpers/session-cache/session-cache.js'
 import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
+import { pulse } from '~/src/server/common/helpers/pulse.js'
 
 const isProduction = config.get('isProduction')
 
@@ -52,10 +53,12 @@ async function createServer() {
     await server.register(secureContext)
   }
 
-  await server.register([sessionCache, nunjucksConfig])
-
-  // Register all the controllers/routes defined in src/server/router.js
-  await server.register([router])
+  await server.register([
+    pulse,
+    sessionCache,
+    nunjucksConfig,
+    router // Register all the controllers/routes defined in src/server/router.js
+  ])
 
   server.ext('onPreResponse', catchAll)
 

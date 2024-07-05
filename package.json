@@ -50,6 +50,7 @@
     "date-fns": "3.6.0",
     "govuk-frontend": "5.4.0",
     "hapi-pino": "12.1.0",
+    "hapi-pulse": "3.0.1",
     "https-proxy-agent": "7.0.4",
     "ioredis": "5.4.1",
     "lodash": "4.17.21",

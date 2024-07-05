@@ -14,8 +14,9 @@ function getCacheEngine() {
   // will need to be set up. Using Catbox Memory will result in intermittent caching failures as the server side
   // cache will be instance specific and not shared amongst instances.
   if (redisEnabled) {
+    const redisClient = buildRedisClient(config.get('redis'))
     return new CatboxRedis({
-      client: buildRedisClient()
+      client: redisClient
     })
   } else if (isProduction) {
     logger.error('Catbox Memory used in production')
