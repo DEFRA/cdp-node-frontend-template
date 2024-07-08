@@ -9,7 +9,8 @@
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
     "types": ["jest"]
   },
   "exclude": [".cache", ".public", ".server", "coverage", "node_modules"],
