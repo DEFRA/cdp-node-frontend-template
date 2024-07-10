@@ -20,48 +20,42 @@ function buildRedisClient() {
   const host = redisConfig.host
   let redisClient
 
-  if (redisConfig.enabled) {
-    if (redisConfig.useSingleInstanceCache) {
-      redisClient = new IoRedis({
-        port,
-        host,
-        db,
-        keyPrefix
-      })
-    } else {
-      redisClient = new IoRedis.Cluster(
-        [
-          {
-            host,
-            port
-          }
-        ],
-        {
-          keyPrefix,
-          slotsRefreshTimeout: 10000,
-          dnsLookup: (address, callback) => callback(null, address),
-          redisOptions: {
-            username: redisConfig.username,
-            password: redisConfig.password,
-            db,
-            tls: {}
-          }
-        }
-      )
-    }
-
-    redisClient.on('connect', () => {
-      logger.info('Connected to Redis server')
-    })
-
-    redisClient.on('error', (error) => {
-      logger.error(`Redis connection error ${error}`)
+  if (redisConfig.useSingleInstanceCache) {
+    redisClient = new IoRedis({
+      port,
+      host,
+      db,
+      keyPrefix
     })
   } else {
-    throw new Error(
-      'Before you enable Redis, contact the CDP platform team as we need to set up config so you can run Redis in CDP environments'
+    redisClient = new IoRedis.Cluster(
+      [
+        {
+          host,
+          port
+        }
+      ],
+      {
+        keyPrefix,
+        slotsRefreshTimeout: 10000,
+        dnsLookup: (address, callback) => callback(null, address),
+        redisOptions: {
+          username: redisConfig.username,
+          password: redisConfig.password,
+          db,
+          tls: {}
+        }
+      }
     )
   }
+
+  redisClient.on('connect', () => {
+    logger.info('Connected to Redis server')
+  })
+
+  redisClient.on('error', (error) => {
+    logger.error(`Redis connection error ${error}`)
+  })
 
   return redisClient
 }
