@@ -15,9 +15,10 @@ export const loggerOptions = {
   level: config.get('logLevel'),
   ...(config.get('isDevelopment')
     ? { transport: { target: 'pino-pretty' } }
-    : ecsFormat())
+    : /** @type {Omit<LoggerOptions, 'mixin' | 'transport'>} */ (ecsFormat()))
 }
 
 /**
  * @import { Options } from 'hapi-pino'
+ * @import { LoggerOptions } from 'pino'
  */
