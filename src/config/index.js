@@ -109,7 +109,7 @@ export const config = convict({
       }
     }
   },
-  redis: {
+  redis: /** @type {Schema<RedisConfig>} */ ({
     enabled: {
       doc: 'Enable Redis on your Frontend.',
       format: Boolean,
@@ -147,7 +147,12 @@ export const config = convict({
       default: process.env.NODE_ENV !== 'production',
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
-  }
+  })
 })
 
 config.validate({ allowed: 'strict' })
+
+/**
+ * @import { Schema } from 'convict'
+ * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
+ */

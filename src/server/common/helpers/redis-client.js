@@ -58,3 +58,13 @@ export function buildRedisClient() {
 
   return redisClient
 }
+
+/**
+ * @typedef {object} RedisConfig
+ * @property {boolean} enabled
+ * @property {string} host
+ * @property {string} username
+ * @property {string} password
+ * @property {string} keyPrefix
+ * @property {boolean} useSingleInstanceCache
+ */
