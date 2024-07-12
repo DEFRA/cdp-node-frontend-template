@@ -64,20 +64,20 @@ export const config = convict({
     default: 'info',
     env: 'LOG_LEVEL'
   },
-  httpProxy: {
+  httpProxy: /** @type {SchemaObj<string | null>} */ ({
     doc: 'HTTP Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTP_PROXY'
-  },
-  httpsProxy: {
+  }),
+  httpsProxy: /** @type {SchemaObj<string | null>} */ ({
     doc: 'HTTPS Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTPS_PROXY'
-  },
+  }),
   session: {
     cache: {
       name: {
@@ -153,6 +153,6 @@ export const config = convict({
 config.validate({ allowed: 'strict' })
 
 /**
- * @import { Schema } from 'convict'
+ * @import { Schema, SchemaObj } from 'convict'
  * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
  */
