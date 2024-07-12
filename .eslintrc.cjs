@@ -5,8 +5,11 @@ module.exports = {
       extends: [
         'standard',
         'plugin:import/recommended',
+        'plugin:import/typescript',
         'plugin:n/recommended',
         'plugin:promise/recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/stylistic',
         'prettier'
       ],
       env: {
@@ -15,9 +18,17 @@ module.exports = {
       files: ['**/*.{cjs,js}'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
-        ecmaVersion: 'latest'
+        ecmaVersion: 'latest',
+        project: ['./tsconfig.json'],
+        tsconfigRootDir: __dirname
       },
-      plugins: ['import', 'n', 'promise', 'prettier'],
+      plugins: [
+        '@typescript-eslint',
+        'import',
+        'n',
+        'promise',
+        'prettier'
+      ],
       rules: {
         'prettier/prettier': [
           'error',
@@ -40,6 +51,9 @@ module.exports = {
         'n/no-missing-import': 'off'
       },
       settings: {
+        'import/parsers': {
+          '@typescript-eslint/parser': ['.cjs', '.js']
+        },
         'import/resolver': {
           node: true,
           typescript: true
@@ -59,6 +73,9 @@ module.exports = {
       files: ['**/*.cjs'],
       parserOptions: {
         sourceType: 'commonjs'
+      },
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off'
       }
     },
     {
@@ -77,7 +94,12 @@ module.exports = {
         'plugin:jest-formatting/recommended'
       ],
       files: ['**/*.test.{cjs,js}'],
-      plugins: ['jest']
+      plugins: ['jest'],
+      rules: {
+        // Allow Jest to assert on mocked unbound methods
+        '@typescript-eslint/unbound-method': 'off',
+        'jest/unbound-method': 'error'
+      }
     }
   ],
   root: true
