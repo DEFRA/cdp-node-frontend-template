@@ -1,15 +1,17 @@
-import { createServer } from '~/src/server/index.js'
+import hapi from '@hapi/hapi'
+import { router } from '~/src/server/router.js'
 
 describe('#healthController', () => {
   /** @type {Server} */
   let server
 
   beforeAll(async () => {
-    server = await createServer()
+    server = hapi.server()
+    await server.register([router])
     await server.initialize()
   })
 
-  afterEach(async () => {
+  afterAll(async () => {
     await server.stop()
   })
 

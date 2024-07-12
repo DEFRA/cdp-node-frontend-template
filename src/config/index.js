@@ -111,7 +111,7 @@ export const config = convict({
   },
   redis: /** @type {Schema<RedisConfig>} */ ({
     enabled: {
-      doc: 'Enable Redis on your Frontend.',
+      doc: 'Enable Redis on your Frontend. Redis is used for server-side caching',
       format: Boolean,
       default: true,
       env: 'REDIS_ENABLED'
