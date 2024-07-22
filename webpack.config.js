@@ -105,9 +105,10 @@ export default {
           {
             loader: 'sass-loader',
             options: {
-              api: 'modern-compiler',
               sassOptions: {
-                loadPaths: [path.join(dirname, 'src/server/common/components')],
+                includePaths: [
+                  path.join(dirname, 'src/server/common/components')
+                ],
                 quietDeps: true
               },
               warnRuleAsWarning: true
