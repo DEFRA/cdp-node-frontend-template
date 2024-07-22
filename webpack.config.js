@@ -109,6 +109,7 @@ export default {
                 includePaths: [
                   path.join(dirname, 'src/server/common/components')
                 ],
+                outputStyle: 'expanded',
                 quietDeps: true
               },
               warnRuleAsWarning: true
