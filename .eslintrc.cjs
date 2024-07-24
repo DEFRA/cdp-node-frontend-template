@@ -6,6 +6,7 @@ module.exports = {
         'standard',
         'plugin:import/recommended',
         'plugin:import/typescript',
+        'plugin:jsdoc/recommended-typescript-flavor',
         'plugin:n/recommended',
         'plugin:promise/recommended',
         'plugin:@typescript-eslint/recommended',
@@ -25,6 +26,7 @@ module.exports = {
       plugins: [
         '@typescript-eslint',
         'import',
+        'jsdoc',
         'n',
         'promise',
         'prettier'
@@ -37,6 +39,22 @@ module.exports = {
           }
         ],
         'no-console': 'error',
+
+        // JSDoc blocks are optional by default
+        'jsdoc/require-jsdoc': 'off',
+
+        // JSDoc @param types are mandatory for JavaScript
+        'jsdoc/require-param-description': 'off',
+        'jsdoc/require-param-type': 'error',
+        'jsdoc/require-param': 'off',
+
+        // JSDoc @property description is optional
+        'jsdoc/require-property-description': 'off',
+
+        // JSDoc @returns is optional
+        'jsdoc/require-returns-description': 'off',
+        'jsdoc/require-returns-type': 'off',
+        'jsdoc/require-returns': 'off',
 
         // Check for mandatory file extensions
         // https://nodejs.org/api/esm.html#mandatory-file-extensions
