@@ -12,21 +12,23 @@ const manifestPath = path.join(
   '.public/assets-manifest.json'
 )
 
+/** @type {Record<string, string> | undefined} */
+let webpackManifest
+
 /**
  * @param {Request | null} request
  */
 export function context(request) {
-  /** @type {Record<string, string> | undefined} */
-  let webpackManifest
-
-  try {
-    webpackManifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
-  } catch (error) {
-    logger.error('Webpack Manifest assets file not found')
+  if (!webpackManifest) {
+    try {
+      webpackManifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
+    } catch (error) {
+      logger.error(`Webpack ${path.basename(manifestPath)} not found`)
+    }
   }
 
   return {
-    assetPath: '/public/assets',
+    assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
     breadcrumbs: [],
@@ -37,7 +39,7 @@ export function context(request) {
      */
     getAssetPath(asset) {
       const webpackAssetPath = webpackManifest?.[asset]
-      return `${assetPath}/${webpackAssetPath}`
+      return `${assetPath}/${webpackAssetPath ?? asset}`
     }
   }
 }

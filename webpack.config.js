@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url'
 import path from 'path'
 import CopyPlugin from 'copy-webpack-plugin'
 import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import TerserPlugin from 'terser-webpack-plugin'
 import WebpackAssetsManifest from 'webpack-assets-manifest'
 
@@ -59,7 +58,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(js|mjs)$/,
+        test: /\.(js|mjs|scss)$/,
         loader: 'source-map-loader',
         enforce: 'pre'
       },
@@ -93,27 +92,27 @@ export default {
       },
       {
         test: /\.scss$/,
+        type: 'asset/resource',
+        generator: {
+          binary: false,
+          filename:
+            NODE_ENV === 'production'
+              ? 'stylesheets/[name].[contenthash:7].min.css'
+              : 'stylesheets/[name].css'
+        },
         use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              // Allow sass-loader to process CSS @import first
-              // before we use css-loader to extract `url()` etc
-              importLoaders: 2
-            }
-          },
           'postcss-loader',
           {
             loader: 'sass-loader',
             options: {
               sassOptions: {
                 includePaths: [
-                  path.join(dirname, 'src/server/common/components'),
-                  path.join(dirname, 'node_modules')
+                  path.join(dirname, 'src/server/common/components')
                 ],
+                outputStyle: 'expanded',
                 quietDeps: true
-              }
+              },
+              warnRuleAsWarning: true
             }
           }
         ]
@@ -172,12 +171,6 @@ export default {
   plugins: [
     new CleanWebpackPlugin(),
     new WebpackAssetsManifest(),
-    new MiniCssExtractPlugin({
-      filename:
-        NODE_ENV === 'production'
-          ? 'stylesheets/[name].[contenthash:7].min.css'
-          : 'stylesheets/[name].css'
-    }),
     new CopyPlugin({
       patterns: [
         {
@@ -187,6 +180,11 @@ export default {
       ]
     })
   ],
+  stats: {
+    errorDetails: true,
+    loggingDebug: ['sass-loader'],
+    preset: 'minimal'
+  },
   target: 'browserslist:javascripts'
 }
 

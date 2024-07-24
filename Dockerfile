@@ -19,7 +19,7 @@ RUN npm install
 COPY --chown=node:node . .
 RUN npm run build
 
-CMD [ "npm", "run", "docker:dev" ]
+CMD [ "npm", "run", "dev" ]
 
 FROM development as productionBuild
 

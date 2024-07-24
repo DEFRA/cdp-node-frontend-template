@@ -1,5 +1,9 @@
 {
-  "watch": [".public/assets-manifest.json", "./src", "./mock-api"],
-  "ignore": ["**/*.test.*", "./test-helpers", "./src/common/assets"],
-  "ext": "js,json,njk,scss"
+  "watch": ["./src"],
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "ignore": ["**/*.test.*", "./src/server/common/test-helpers", "./src/client"],
+  "ext": "cjs,js,json",
+  "signal": "SIGINT"
 }
