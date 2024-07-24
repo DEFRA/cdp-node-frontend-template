@@ -16,6 +16,9 @@ const govukFrontendPath = path.dirname(
   require.resolve('govuk-frontend/package.json')
 )
 
+/**
+ * @type {Configuration}
+ */
 export default {
   context: path.resolve(dirname, 'src/client'),
   entry: {
@@ -26,7 +29,7 @@ export default {
   experiments: {
     outputModule: true
   },
-  mode: NODE_ENV,
+  mode: NODE_ENV === 'production' ? 'production' : 'development',
   devtool: NODE_ENV === 'production' ? 'source-map' : 'inline-source-map',
   watchOptions: {
     aggregateTimeout: 200,
@@ -186,3 +189,7 @@ export default {
   ],
   target: 'browserslist:javascripts'
 }
+
+/**
+ * @import { Configuration } from 'webpack'
+ */

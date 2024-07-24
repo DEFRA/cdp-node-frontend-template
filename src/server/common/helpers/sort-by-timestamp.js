@@ -1,4 +1,8 @@
-function sortByTimestampAsc(a, b) {
+/**
+ * @param {{ timestamp: string }} a
+ * @param {{ timestamp: string }} b
+ */
+export function sortByTimestampAsc(a, b) {
   if (a.timestamp > b.timestamp) {
     return 1
   }
@@ -10,6 +14,10 @@ function sortByTimestampAsc(a, b) {
   return 0
 }
 
+/**
+ * @param {{ timestamp: string }} a
+ * @param {{ timestamp: string }} b
+ */
 function sortByTimestampDesc(a, b) {
   if (a.timestamp < b.timestamp) {
     return 1
@@ -22,7 +30,7 @@ function sortByTimestampDesc(a, b) {
   return 0
 }
 
-function sortByTimestamp(direction = 'desc') {
+export function sortByTimestamp(direction = 'desc') {
   if (direction === 'asc') {
     return sortByTimestampAsc
   }
@@ -31,5 +39,3 @@ function sortByTimestamp(direction = 'desc') {
     return sortByTimestampDesc
   }
 }
-
-export { sortByTimestamp }

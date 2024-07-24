@@ -1,3 +1,6 @@
+/**
+ * @param {number} statusCode
+ */
 function statusCodeMessage(statusCode) {
   switch (true) {
     case statusCode === 404:
@@ -13,10 +16,14 @@ function statusCodeMessage(statusCode) {
   }
 }
 
-function catchAll(request, h) {
+/**
+ * @param {Request} request
+ * @param {ResponseToolkit} h
+ */
+export function catchAll(request, h) {
   const { response } = request
 
-  if (!response.isBoom) {
+  if (!('isBoom' in response)) {
     return h.continue
   }
 
@@ -34,4 +41,6 @@ function catchAll(request, h) {
     .code(statusCode)
 }
 
-export { catchAll }
+/**
+ * @import { Request, ResponseToolkit } from '@hapi/hapi'
+ */

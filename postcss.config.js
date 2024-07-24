@@ -1,5 +1,8 @@
 import autoprefixer from 'autoprefixer'
 
+/**
+ * @type {Config}
+ */
 export default {
   plugins: [
     autoprefixer({
@@ -7,3 +10,7 @@ export default {
     })
   ]
 }
+
+/**
+ * @import { Config } from 'postcss-load-config'
+ */

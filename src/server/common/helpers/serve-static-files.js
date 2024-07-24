@@ -1,9 +1,12 @@
 import { config } from '~/src/config/index.js'
 
-const serveStaticFiles = {
+/**
+ * @satisfies {ServerRegisterPluginObject<void>}
+ */
+export const serveStaticFiles = {
   plugin: {
     name: 'staticFiles',
-    register: async (server) => {
+    register(server) {
       server.route([
         {
           options: {
@@ -15,7 +18,7 @@ const serveStaticFiles = {
           },
           method: 'GET',
           path: '/favicon.ico',
-          handler: function (request, h) {
+          handler(request, h) {
             return h.response().code(204).type('image/x-icon')
           }
         },
@@ -41,4 +44,6 @@ const serveStaticFiles = {
   }
 }
 
-export { serveStaticFiles }
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ */

@@ -3,11 +3,12 @@ import { aboutController } from '~/src/server/about/controller.js'
 /**
  * Sets up the routes used in the /about page.
  * These routes are registered in src/server/router.js.
+ * @satisfies {ServerRegisterPluginObject<void>}
  */
-const about = {
+export const about = {
   plugin: {
     name: 'about',
-    register: async (server) => {
+    register(server) {
       server.route([
         {
           method: 'GET',
@@ -19,4 +20,6 @@ const about = {
   }
 }
 
-export { about }
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ */

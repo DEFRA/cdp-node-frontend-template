@@ -1,8 +1,11 @@
-import ecsFormat from '@elastic/ecs-pino-format'
+import { ecsFormat } from '@elastic/ecs-pino-format'
 
 import { config } from '~/src/config/index.js'
 
-const loggerOptions = {
+/**
+ * @satisfies {Options}
+ */
+export const loggerOptions = {
   enabled: !config.get('isTest'),
   ignorePaths: ['/health'],
   redact: {
@@ -12,7 +15,10 @@ const loggerOptions = {
   level: config.get('logLevel'),
   ...(config.get('isDevelopment')
     ? { transport: { target: 'pino-pretty' } }
-    : ecsFormat())
+    : /** @type {Omit<LoggerOptions, 'mixin' | 'transport'>} */ (ecsFormat()))
 }
 
-export { loggerOptions }
+/**
+ * @import { Options } from 'hapi-pino'
+ * @import { LoggerOptions } from 'pino'
+ */

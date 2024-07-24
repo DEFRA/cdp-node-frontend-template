@@ -2,9 +2,15 @@ import hapiPino from 'hapi-pino'
 
 import { loggerOptions } from '~/src/server/common/helpers/logging/logger-options.js'
 
-const requestLogger = {
+/**
+ * @satisfies {ServerRegisterPluginObject<Options>}
+ */
+export const requestLogger = {
   plugin: hapiPino,
   options: loggerOptions
 }
 
-export { requestLogger }
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ * @import { Options } from 'hapi-pino'
+ */

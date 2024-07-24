@@ -8,7 +8,7 @@ const oneHour = 1000 * 60 * 60
 const fourHours = oneHour * 4
 const oneWeekMillis = oneHour * 24 * 7
 
-const config = convict({
+export const config = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -64,20 +64,20 @@ const config = convict({
     default: 'info',
     env: 'LOG_LEVEL'
   },
-  httpProxy: {
+  httpProxy: /** @type {SchemaObj<string | null>} */ ({
     doc: 'HTTP Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTP_PROXY'
-  },
-  httpsProxy: {
+  }),
+  httpsProxy: /** @type {SchemaObj<string | null>} */ ({
     doc: 'HTTPS Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTPS_PROXY'
-  },
+  }),
   session: {
     cache: {
       name: {
@@ -109,7 +109,7 @@ const config = convict({
       }
     }
   },
-  redis: {
+  redis: /** @type {Schema<RedisConfig>} */ ({
     enabled: {
       doc: 'Enable Redis on your Frontend.',
       format: Boolean,
@@ -147,9 +147,12 @@ const config = convict({
       default: process.env.NODE_ENV !== 'production',
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
-  }
+  })
 })
 
 config.validate({ allowed: 'strict' })
 
-export { config }
+/**
+ * @import { Schema, SchemaObj } from 'convict'
+ * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
+ */

@@ -12,7 +12,11 @@ const manifestPath = path.join(
   '.public/assets-manifest.json'
 )
 
-async function context(request) {
+/**
+ * @param {Request | null} request
+ */
+export function context(request) {
+  /** @type {Record<string, string> | undefined} */
   let webpackManifest
 
   try {
@@ -27,12 +31,17 @@ async function context(request) {
     serviceUrl: '/',
     breadcrumbs: [],
     navigation: buildNavigation(request),
-    getAssetPath: function (asset) {
-      const webpackAssetPath = webpackManifest[asset]
 
+    /**
+     * @param {string} asset
+     */
+    getAssetPath(asset) {
+      const webpackAssetPath = webpackManifest?.[asset]
       return `${assetPath}/${webpackAssetPath}`
     }
   }
 }
 
-export { context }
+/**
+ * @import { Request } from '@hapi/hapi'
+ */

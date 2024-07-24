@@ -1,9 +1,12 @@
 import { healthController } from '~/src/server/health/controller.js'
 
-const health = {
+/**
+ * @satisfies {ServerRegisterPluginObject<void>}
+ */
+export const health = {
   plugin: {
     name: 'health',
-    register: async (server) => {
+    register(server) {
       server.route({
         method: 'GET',
         path: '/health',
@@ -13,4 +16,6 @@ const health = {
   }
 }
 
-export { health }
+/**
+ * @import { ServerRegisterPluginObject } from '@hapi/hapi'
+ */
