@@ -8,6 +8,8 @@ const oneHour = 1000 * 60 * 60
 const fourHours = oneHour * 4
 const oneWeekMillis = oneHour * 24 * 7
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export const config = convict({
   env: {
     doc: 'The application environment.',
@@ -46,7 +48,7 @@ export const config = convict({
   isProduction: {
     doc: 'If this application running in the production environment',
     format: Boolean,
-    default: process.env.NODE_ENV === 'production'
+    default: isProduction
   },
   isDevelopment: {
     doc: 'If this application running in the development environment',
@@ -58,11 +60,25 @@ export const config = convict({
     format: Boolean,
     default: process.env.NODE_ENV === 'test'
   },
-  logLevel: {
-    doc: 'Logging level',
-    format: ['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'],
-    default: 'info',
-    env: 'LOG_LEVEL'
+  log: {
+    enabled: {
+      doc: 'Is logging enabled',
+      format: Boolean,
+      default: process.env.NODE_ENV !== 'test',
+      env: 'LOG_ENABLED'
+    },
+    level: {
+      doc: 'Logging level',
+      format: ['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'],
+      default: 'info',
+      env: 'LOG_LEVEL'
+    },
+    format: {
+      doc: 'Format to output logs in.',
+      format: ['ecs', 'pino-pretty'],
+      default: isProduction ? 'ecs' : 'pino-pretty',
+      env: 'LOG_FORMAT'
+    }
   },
   httpProxy: /** @type {SchemaObj<string | null>} */ ({
     doc: 'HTTP Proxy',
@@ -78,8 +94,26 @@ export const config = convict({
     default: null,
     env: 'CDP_HTTPS_PROXY'
   }),
+  enableSecureContext: {
+    doc: 'Enable Secure Context',
+    format: Boolean,
+    default: isProduction,
+    env: 'ENABLE_SECURE_CONTEXT'
+  },
+  enableMetrics: {
+    doc: 'Enable metrics reporting',
+    format: Boolean,
+    default: isProduction,
+    env: 'ENABLE_METRICS'
+  },
   session: {
     cache: {
+      engine: {
+        doc: 'backend cache is written to',
+        format: ['redis', 'memory'],
+        default: isProduction ? 'redis' : 'memory',
+        env: 'SESSION_CACHE_ENGINE'
+      },
       name: {
         doc: 'server side session cache name',
         format: String,
@@ -106,16 +140,16 @@ export const config = convict({
         default: 'the-password-must-be-at-least-32-characters-long',
         env: 'SESSION_COOKIE_PASSWORD',
         sensitive: true
+      },
+      secure: {
+        doc: 'set secure flag on cookie',
+        format: Boolean,
+        default: isProduction,
+        env: 'SESSION_COOKIE_SECURE'
       }
     }
   },
   redis: /** @type {Schema<RedisConfig>} */ ({
-    enabled: {
-      doc: 'Enable Redis on your Frontend.',
-      format: Boolean,
-      default: true,
-      env: 'REDIS_ENABLED'
-    },
     host: {
       doc: 'Redis cache host',
       format: String,
@@ -142,9 +176,9 @@ export const config = convict({
       env: 'REDIS_KEY_PREFIX'
     },
     useSingleInstanceCache: {
-      doc: 'Enable the use of a single instance Redis Cache',
+      doc: 'Connect to a single instance of redis instead of a cluster.',
       format: Boolean,
-      default: process.env.NODE_ENV !== 'production',
+      default: !isProduction,
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
   })

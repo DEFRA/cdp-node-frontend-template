@@ -11,8 +11,6 @@ import { sessionCache } from '~/src/server/common/helpers/session-cache/session-
 import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
 import { pulse } from '~/src/server/common/helpers/pulse.js'
 
-const isProduction = config.get('isProduction')
-
 export async function createServer() {
   const server = hapi.server({
     port: config.get('port'),
@@ -42,18 +40,14 @@ export async function createServer() {
     cache: [
       {
         name: config.get('session.cache.name'),
-        engine: getCacheEngine()
+        engine: getCacheEngine(config.get('session.cache.engine'))
       }
     ]
   })
 
-  await server.register(requestLogger)
-
-  if (isProduction) {
-    await server.register(secureContext)
-  }
-
   await server.register([
+    requestLogger,
+    secureContext,
     pulse,
     sessionCache,
     nunjucksConfig,

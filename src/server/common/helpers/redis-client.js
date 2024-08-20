@@ -60,7 +60,6 @@ export function buildRedisClient(redisConfig) {
 
 /**
  * @typedef {object} RedisConfig
- * @property {boolean} enabled
  * @property {string} host
  * @property {string} username
  * @property {string} password

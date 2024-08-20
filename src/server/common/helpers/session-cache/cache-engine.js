@@ -5,26 +5,25 @@ import { Engine as CatboxMemory } from '@hapi/catbox-memory'
 import { config } from '~/src/config/index.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
 
-export function getCacheEngine() {
-  const isProduction = config.get('isProduction')
+export function getCacheEngine(engine) {
   const logger = createLogger()
 
-  const redisEnabled = config.get('redis.enabled')
-  // If server side caching is required, including anything with yar (e.g. `request.yar.set`) then Redis
-  // will need to be set up. Using Catbox Memory will result in intermittent caching failures as the server side
-  // cache will be instance specific and not shared amongst instances.
-  if (redisEnabled) {
-    const redisClient = buildRedisClient(config.get('redis'))
-    return new CatboxRedis({
-      client: redisClient
-    })
-  } else if (isProduction) {
-    logger.error('Catbox Memory used in production')
-    return new CatboxMemory()
-  } else {
-    logger.warn(
-      'Catbox Memory used for server side cache, this could cause issues if used in production - See README'
-    )
-    return new CatboxMemory()
+  switch (engine) {
+    case 'redis': {
+      logger.info('Using Redis session cache')
+      const redisClient = buildRedisClient(config.get('redis'))
+      return new CatboxRedis({
+        client: redisClient
+      })
+    }
+    default: {
+      logger.info('Using Catbox Memory session cache')
+      if (config.get('isProduction')) {
+        logger.error(
+          'Catbox Memory is for local development only, it should not be used in production!'
+        )
+      }
+      return new CatboxMemory()
+    }
   }
 }
