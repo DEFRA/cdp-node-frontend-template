@@ -55,7 +55,7 @@ module.exports = {
 
         // JSDoc @param types are mandatory for JavaScript
         'jsdoc/require-param-description': 'off',
-        'jsdoc/require-param-type': 'off',
+        'jsdoc/require-param-type': 'error',
         'jsdoc/require-param': 'off',
 
         // JSDoc @property description is optional
