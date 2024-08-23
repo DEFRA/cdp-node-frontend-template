@@ -183,7 +183,19 @@ export const config = convict({
       default: !isProduction,
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
-  })
+  }),
+  nunjucks: {
+    watch: {
+      doc: 'Reload templates when they are changed.',
+      format: Boolean,
+      default: isDevelopment
+    },
+    noCache: {
+      doc: 'Use a cache and recompile templates each time',
+      format: Boolean,
+      default: isDevelopment
+    }
+  }
 })
 
 config.validate({ allowed: 'strict' })
