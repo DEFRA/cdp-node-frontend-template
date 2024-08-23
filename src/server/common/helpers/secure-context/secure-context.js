@@ -1,7 +1,9 @@
 import tls from 'node:tls'
+
 import { config } from '~/src/config/index.js'
 import { getTrustStoreCerts } from '~/src/server/common/helpers/secure-context/get-trust-store-certs.js'
 
+const enableSecureContext = config.get('enableSecureContext')
 /**
  * Creates a new secure context loaded from Base64 encoded certs
  * @satisfies {ServerRegisterPluginObject<void>}
@@ -10,7 +12,7 @@ export const secureContext = {
   plugin: {
     name: 'secure-context',
     register(server) {
-      if (config.get('enableSecureContext')) {
+      if (enableSecureContext) {
         const originalCreateSecureContext = tls.createSecureContext
 
         tls.createSecureContext = function (options = {}) {
@@ -28,12 +30,9 @@ export const secureContext = {
 
           return secureContext
         }
-
-        // @ts-expect-error TS2769
-        server.decorate('server', 'secureContext', tls.createSecureContext())
-      } else {
-        server.logger.info('Custom secure context is disabled')
       }
+
+      server.decorate('server', 'getSecureContext', tls.createSecureContext)
     }
   }
 }
