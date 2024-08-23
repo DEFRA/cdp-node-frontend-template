@@ -2,7 +2,7 @@ import yar from '@hapi/yar'
 
 import { config } from '~/src/config/index.js'
 
-const sessionConfig = config.get('session')
+const sessionConfig = config.session
 
 /**
  * Set options.maxCookieSize to 0 to always use server-side storage
@@ -21,7 +21,7 @@ export const sessionCache = {
     cookieOptions: {
       password: sessionConfig.cookie.password,
       ttl: sessionConfig.cookie.ttl,
-      isSecure: config.get('session.cookie.secure')
+      isSecure: config.session.cookie.secure
     }
   }
 }

@@ -12,7 +12,7 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  */
 export async function counter(metricName, value = 1) {
   const logger = createLogger()
-  if (!config.get('enableMetrics')) return
+  if (!config.enableMetrics) return
 
   try {
     const metrics = createMetricsLogger()

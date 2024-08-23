@@ -6,11 +6,8 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
 import { buildNavigation } from '~/src/config/nunjucks/context/build-navigation.js'
 
 const logger = createLogger()
-const assetPath = config.get('assetPath')
-const manifestPath = path.join(
-  config.get('root'),
-  '.public/assets-manifest.json'
-)
+const assetPath = config.assetPath
+const manifestPath = path.join(config.root, '.public/assets-manifest.json')
 
 /** @type {Record<string, string> | undefined} */
 let webpackManifest
@@ -29,7 +26,7 @@ export function context(request) {
 
   return {
     assetPath: `${assetPath}/assets`,
-    serviceName: config.get('serviceName'),
+    serviceName: config.serviceName,
     serviceUrl: '/',
     breadcrumbs: [],
     navigation: buildNavigation(request),

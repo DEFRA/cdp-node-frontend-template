@@ -10,7 +10,7 @@ const oneWeekMillis = oneHour * 24 * 7
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-export const config = convict({
+const schema = {
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -80,20 +80,20 @@ export const config = convict({
       env: 'LOG_FORMAT'
     }
   },
-  httpProxy: /** @type {SchemaObj<string | null>} */ ({
+  httpProxy: {
     doc: 'HTTP Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTP_PROXY'
-  }),
-  httpsProxy: /** @type {SchemaObj<string | null>} */ ({
+  },
+  httpsProxy: {
     doc: 'HTTPS Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'CDP_HTTPS_PROXY'
-  }),
+  },
   enableSecureContext: {
     doc: 'Enable Secure Context',
     format: Boolean,
@@ -149,7 +149,7 @@ export const config = convict({
       }
     }
   },
-  redis: /** @type {Schema<RedisConfig>} */ ({
+  redis: {
     host: {
       doc: 'Redis cache host',
       format: String,
@@ -181,12 +181,35 @@ export const config = convict({
       default: !isProduction,
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
-  })
-})
+  }
+}
 
-config.validate({ allowed: 'strict' })
+/**
+ * @typedef {object} config
+ * @property {string} env
+ * @property {number} port
+ * @property {number} staticCacheTimeout
+ * @property {string} serviceName
+ * @property {string} root
+ * @property {string} assetPath
+ * @property {boolean} isProduction
+ * @property {boolean} isDevelopment
+ * @property {boolean} isTest
+ * @property {undefined} log
+ * @property {string|null} httpProxy
+ * @property {string|null} httpsProxy
+ * @property {boolean} enableSecureContext
+ * @property {boolean} enableMetrics
+ * @property {SessionConfig} session
+ * @property {RedisConfig} redis
+ */
+export const config = convict(schema)
+  .validate({ allowed: 'strict' })
+  .getProperties()
 
 /**
  * @import { Schema, SchemaObj } from 'convict'
  * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
+ *
+ * @typedef {{ cache: {engine: string, name: string, ttl: number}, cookie: {ttl: number, host: string, username: string, password: string, secure: boolean} }} SessionConfig
  */

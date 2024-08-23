@@ -16,7 +16,7 @@ function nonProxyFetch(url, opts) {
  * @param {Partial<RequestInit>} opts
  */
 export function proxyFetch(url, opts) {
-  const proxy = config.get('httpsProxy') ?? config.get('httpProxy')
+  const proxy = config.httpsProxy ?? config.httpProxy
   if (!proxy) {
     return nonProxyFetch(url, opts)
   } else {

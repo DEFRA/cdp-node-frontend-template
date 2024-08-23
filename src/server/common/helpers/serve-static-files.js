@@ -12,7 +12,7 @@ export const serveStaticFiles = {
           options: {
             auth: false,
             cache: {
-              expiresIn: config.get('staticCacheTimeout'),
+              expiresIn: config.staticCacheTimeout,
               privacy: 'private'
             }
           },
@@ -26,12 +26,12 @@ export const serveStaticFiles = {
           options: {
             auth: false,
             cache: {
-              expiresIn: config.get('staticCacheTimeout'),
+              expiresIn: config.staticCacheTimeout,
               privacy: 'private'
             }
           },
           method: 'GET',
-          path: `${config.get('assetPath')}/{param*}`,
+          path: `${config.assetPath}/{param*}`,
           handler: {
             directory: {
               path: '.',

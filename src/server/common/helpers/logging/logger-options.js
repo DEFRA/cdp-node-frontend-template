@@ -13,14 +13,14 @@ const formatters = {
  * @satisfies {Options}
  */
 export const loggerOptions = {
-  enabled: config.get('log.enabled'),
+  enabled: config.log.enabled,
   ignorePaths: ['/health'],
   redact: {
     paths: ['req.headers.authorization', 'req.headers.cookie', 'res.headers'],
     remove: true
   },
-  level: config.get('log.level'),
-  ...formatters[config.get('log.format')]
+  level: config.log.level,
+  ...formatters[config.log.format]
 }
 
 /**

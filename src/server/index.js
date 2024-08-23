@@ -13,7 +13,7 @@ import { pulse } from '~/src/server/common/helpers/pulse.js'
 
 export async function createServer() {
   const server = hapi.server({
-    port: config.get('port'),
+    port: config.port,
     routes: {
       validate: {
         options: {
@@ -21,7 +21,7 @@ export async function createServer() {
         }
       },
       files: {
-        relativeTo: path.resolve(config.get('root'), '.public')
+        relativeTo: path.resolve(config.root, '.public')
       },
       security: {
         hsts: {
@@ -39,8 +39,8 @@ export async function createServer() {
     },
     cache: [
       {
-        name: config.get('session.cache.name'),
-        engine: getCacheEngine(config.get('session.cache.engine'))
+        name: config.session.cache.name,
+        engine: getCacheEngine(config.session.cache.engine)
       }
     ]
   })

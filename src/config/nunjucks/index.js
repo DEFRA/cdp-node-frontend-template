@@ -20,8 +20,8 @@ const nunjucksEnvironment = nunjucks.configure(
     throwOnUndefined: false,
     trimBlocks: true,
     lstripBlocks: true,
-    watch: config.get('isDevelopment'),
-    noCache: config.get('isDevelopment')
+    watch: config.isDevelopment,
+    noCache: config.isDevelopment
   }
 )
 
@@ -49,7 +49,7 @@ export const nunjucksConfig = {
     },
     relativeTo: path.resolve(dirname, '../..'),
     path: 'server',
-    isCached: config.get('isProduction'),
+    isCached: config.isProduction,
     context
   }
 }
