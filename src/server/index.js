@@ -11,6 +11,8 @@ import { sessionCache } from '~/src/server/common/helpers/session-cache/session-
 import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
 import { pulse } from '~/src/server/common/helpers/pulse.js'
 
+const enablePulse = config.get('enablePulse')
+
 export async function createServer() {
   const server = hapi.server({
     port: config.get('port'),
@@ -45,14 +47,22 @@ export async function createServer() {
     ]
   })
 
-  await server.register([
-    requestLogger,
-    secureContext,
-    pulse,
-    sessionCache,
-    nunjucksConfig,
-    router // Register all the controllers/routes defined in src/server/router.js
-  ])
+  // Hapi Plugins:
+  // requestLogger  - automatically logs incoming requests
+  // pulse          - provides shutdown handlers
+  // secureContext  - loads CA certificates from environment config
+  // sessionCache   - sets up in memory cache in development and redis cache in production
+  // nunjucksConfig - sets up nunjucks template config
+  // router         - routes used in the app
+
+  // Add request logger before all other plugins, so we can see errors
+  await server.register(requestLogger)
+
+  if (enablePulse) {
+    await server.register(pulse)
+  }
+
+  await server.register([secureContext, sessionCache, nunjucksConfig, router])
 
   server.ext('onPreResponse', catchAll)
 
