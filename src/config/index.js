@@ -10,7 +10,26 @@ const oneWeekMillis = oneHour * 24 * 7
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const schema = {
+/**
+ * @typedef {object} config
+ * @property {string} env
+ * @property {number} port
+ * @property {number} staticCacheTimeout
+ * @property {string} serviceName
+ * @property {string} root
+ * @property {string} assetPath
+ * @property {boolean} isProduction
+ * @property {boolean} isDevelopment
+ * @property {boolean} isTest
+ * @property {undefined} log
+ * @property {string|null} httpProxy
+ * @property {string|null} httpsProxy
+ * @property {boolean} enableSecureContext
+ * @property {boolean} enableMetrics
+ * @property {SessionConfig} session
+ * @property {RedisConfig} redis
+ */
+export const config = convict({
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -182,34 +201,11 @@ const schema = {
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
   }
-}
-
-/**
- * @typedef {object} config
- * @property {string} env
- * @property {number} port
- * @property {number} staticCacheTimeout
- * @property {string} serviceName
- * @property {string} root
- * @property {string} assetPath
- * @property {boolean} isProduction
- * @property {boolean} isDevelopment
- * @property {boolean} isTest
- * @property {undefined} log
- * @property {string|null} httpProxy
- * @property {string|null} httpsProxy
- * @property {boolean} enableSecureContext
- * @property {boolean} enableMetrics
- * @property {SessionConfig} session
- * @property {RedisConfig} redis
- */
-export const config = convict(schema)
+})
   .validate({ allowed: 'strict' })
   .getProperties()
 
 /**
- * @import { Schema, SchemaObj } from 'convict'
  * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
- *
  * @typedef {{ cache: {engine: string, name: string, ttl: number}, cookie: {ttl: number, host: string, username: string, password: string, secure: boolean} }} SessionConfig
  */
