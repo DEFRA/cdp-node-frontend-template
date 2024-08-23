@@ -9,6 +9,8 @@ const fourHours = oneHour * 4
 const oneWeekMillis = oneHour * 24 * 7
 
 const isProduction = process.env.NODE_ENV === 'production'
+const isTest = process.env.NODE_ENV === 'test'
+const isDevelopment = process.env.NODE_ENV === 'development'
 
 export const config = convict({
   env: {
@@ -53,12 +55,12 @@ export const config = convict({
   isDevelopment: {
     doc: 'If this application running in the development environment',
     format: Boolean,
-    default: process.env.NODE_ENV !== 'production'
+    default: isDevelopment
   },
   isTest: {
     doc: 'If this application running in the test environment',
     format: Boolean,
-    default: process.env.NODE_ENV === 'test'
+    default: isTest
   },
   log: {
     enabled: {
@@ -181,7 +183,19 @@ export const config = convict({
       default: !isProduction,
       env: 'USE_SINGLE_INSTANCE_CACHE'
     }
-  })
+  }),
+  nunjucks: {
+    watch: {
+      doc: 'Reload templates when they are changed.',
+      format: Boolean,
+      default: isDevelopment
+    },
+    noCache: {
+      doc: 'Use a cache and recompile templates each time',
+      format: Boolean,
+      default: isDevelopment
+    }
+  }
 })
 
 config.validate({ allowed: 'strict' })
