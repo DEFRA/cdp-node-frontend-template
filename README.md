@@ -11,6 +11,7 @@ Core delivery platform Node.js Frontend Template.
   - [Development](#development)
   - [Production](#production)
   - [Npm scripts](#npm-scripts)
+  - [Update dependencies](#update-dependencies)
   - [Formatting](#formatting)
     - [Windows prettier issue](#windows-prettier-issue)
 - [Docker](#docker)
@@ -87,6 +88,17 @@ To view them in your command line run:
 
 ```bash
 npm run
+```
+
+### Update dependencies
+
+To update dependencies use [npm-check-updates](https://github.com/raineorshine/npm-check-updates):
+
+> The following script is a good start. Check out all the options on
+> the [npm-check-updates](https://github.com/raineorshine/npm-check-updates)
+
+```bash
+ncu --interactive --format group
 ```
 
 ### Formatting

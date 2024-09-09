@@ -46,5 +46,6 @@ describe('Breadcrumbs Component', () => {
 })
 
 /**
- * @import { CheerioAPI, Cheerio, Element } from 'cheerio'
+ * @import { CheerioAPI, Cheerio } from 'cheerio'
+ * @import { Element } from 'domhandler'
  */
