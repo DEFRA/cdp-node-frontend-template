@@ -4,19 +4,20 @@ Core delivery platform Node.js Frontend Template.
 
 - [Requirements](#requirements)
   - [Node.js](#nodejs)
-- [Redis](#redis)
 - [Server-side Caching](#server-side-caching)
+- [Redis](#redis)
 - [Local Development](#local-development)
   - [Setup](#setup)
   - [Development](#development)
-  - [Local JSON API](#local-json-api)
   - [Production](#production)
   - [Npm scripts](#npm-scripts)
   - [Formatting](#formatting)
     - [Windows prettier issue](#windows-prettier-issue)
 - [Docker](#docker)
-  - [Development Image](#development-image)
-  - [Production Image](#production-image)
+  - [Development image](#development-image)
+  - [Production image](#production-image)
+  - [Docker Compose](#docker-compose)
+  - [SonarCloud](#sonarcloud)
 - [Licence](#licence)
   - [About the licence](#about-the-licence)
 
@@ -36,16 +37,22 @@ nvm use
 
 ## Server-side Caching
 
-We use Catbox for server-side caching. By default the service will use CatboxRedis when deployed and CatboxMemory for local development.
-You can override the default behaviour by setting the `SESSION_CACHE_ENGINE` environment variable to either `redis` or `memory`.
+We use Catbox for server-side caching. By default the service will use CatboxRedis when deployed and CatboxMemory for
+local development.
+You can override the default behaviour by setting the `SESSION_CACHE_ENGINE` environment variable to either `redis` or
+`memory`.
 
-Please note: CatboxMemory (`memory`) is _not_ suitable for production use! The cache will not be shared between each instance of the service and it will not persist between restarts.
+Please note: CatboxMemory (`memory`) is _not_ suitable for production use! The cache will not be shared between each
+instance of the service and it will not persist between restarts.
 
 ## Redis
 
-Redis is an in-memory key-value store. Every instance of a service has access to the same Redis key-value store similar to how services might have a database (or MongoDB). All frontend services are given access to a namespaced prefixed that matches the service name. e.g. `my-service` will have access to everything in Redis that is prefixed with `my-service`.
+Redis is an in-memory key-value store. Every instance of a service has access to the same Redis key-value store similar
+to how services might have a database (or MongoDB). All frontend services are given access to a namespaced prefixed that
+matches the service name. e.g. `my-service` will have access to everything in Redis that is prefixed with `my-service`.
 
-If your service does not require a session cache to be shared between instances or if you don't require Redis, you can disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `~/src/config/index.js`.
+If your service does not require a session cache to be shared between instances or if you don't require Redis, you can
+disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `~/src/config/index.js`.
 
 ## Local Development
 
@@ -63,14 +70,6 @@ To run the application in `development` mode run:
 
 ```bash
 npm run dev
-```
-
-### Local JSON API
-
-Whilst the APIs are being developed this app uses a local JSON mock API. To start this locally run:
-
-```bash
-npm run mockApi
 ```
 
 ### Production
@@ -143,6 +142,10 @@ A local environment with:
 ```bash
 docker compose up --build -d
 ```
+
+### SonarCloud
+
+Instructions for setting up SonarCloud can be found in [sonar-project.properties](./sonar-project.properties)
 
 ## Licence
 
