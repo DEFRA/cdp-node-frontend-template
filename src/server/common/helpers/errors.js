@@ -1,15 +1,25 @@
 /**
+ * @typedef {Record<string, number>} StatusCodes
+ */
+const statusCodes = {
+  notFound: 404,
+  forbidden: 403,
+  unauthorized: 404,
+  badRequest: 400
+}
+
+/**
  * @param {number} statusCode
  */
 function statusCodeMessage(statusCode) {
   switch (true) {
-    case statusCode === 404:
+    case statusCode === statusCodes.notFound:
       return 'Page not found'
-    case statusCode === 403:
+    case statusCode === statusCodes.forbidden:
       return 'Forbidden'
-    case statusCode === 401:
+    case statusCode === statusCodes.unauthorized:
       return 'Unauthorized'
-    case statusCode === 400:
+    case statusCode === statusCodes.badRequest:
       return 'Bad Request'
     default:
       return 'Something went wrong'
