@@ -101,7 +101,7 @@ export const config = convict({
     default: isProduction,
     env: 'ENABLE_SECURE_CONTEXT'
   },
-  enableMetrics: {
+  metricsIsEnabled: {
     doc: 'Enable metrics reporting',
     format: Boolean,
     default: isProduction,
