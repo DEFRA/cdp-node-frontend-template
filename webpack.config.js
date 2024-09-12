@@ -15,6 +15,8 @@ const govukFrontendPath = path.dirname(
   require.resolve('govuk-frontend/package.json')
 )
 
+const ruleTypeAssetResource = 'asset/resource'
+
 /**
  * @type {Configuration}
  */
@@ -92,7 +94,7 @@ export default {
       },
       {
         test: /\.scss$/,
-        type: 'asset/resource',
+        type: ruleTypeAssetResource,
         generator: {
           binary: false,
           filename:
@@ -118,21 +120,21 @@ export default {
       },
       {
         test: /\.(png|svg|jpe?g|gif)$/,
-        type: 'asset/resource',
+        type: ruleTypeAssetResource,
         generator: {
           filename: 'assets/images/[name][ext]'
         }
       },
       {
         test: /\.(ico)$/,
-        type: 'asset/resource',
+        type: ruleTypeAssetResource,
         generator: {
           filename: 'assets/images/[name][ext]'
         }
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
-        type: 'asset/resource',
+        type: ruleTypeAssetResource,
         generator: {
           filename: 'assets/fonts/[name][ext]'
         }
