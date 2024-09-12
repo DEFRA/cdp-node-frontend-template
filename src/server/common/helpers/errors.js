@@ -1,12 +1,4 @@
-/**
- * @typedef {Record<string, number>} StatusCodes
- */
-const statusCodes = {
-  notFound: 404,
-  forbidden: 403,
-  unauthorized: 404,
-  badRequest: 400
-}
+import { statusCodes } from '~/src/server/common/constants/status-codes.js'
 
 /**
  * @param {number} statusCode
