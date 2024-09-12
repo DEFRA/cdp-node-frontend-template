@@ -3,7 +3,7 @@
  * @satisfies {Partial<ServerRoute>}
  */
 export const healthController = {
-  handler(request, h) {
+  handler(_request, h) {
     return h.response({ message: 'success' }).code(200)
   }
 }
