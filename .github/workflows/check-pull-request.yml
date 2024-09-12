@@ -16,15 +16,19 @@ jobs:
     name: Run Pull Request Checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Test, lint and format code
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - run: npm install
-      - run: npm run format:check
-      - run: npm run lint
-      - run: npm test
+        run: |
+          npm ci
+          npm run format:check
+          npm run lint
+          npm test
 
 #     - name: SonarCloud Scan
 #       if: github.actor != 'dependabot[bot]'
