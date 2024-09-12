@@ -2,6 +2,7 @@
  * @typedef {Record<string, number>} StatusCodes
  */
 export const statusCodes = {
+  ok: 200,
   noContent: 204,
   badRequest: 400,
   unauthorized: 401,
