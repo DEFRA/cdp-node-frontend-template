@@ -30,6 +30,12 @@ jobs:
           npm run lint
           npm test
 
+      - name: Build Docker Image
+        run: |
+          set +e
+          docker build --no-cache --tag cdp-node-frontend-template .
+          exit $?
+
 #     - name: SonarCloud Scan
 #       if: github.actor != 'dependabot[bot]'
 #       uses: SonarSource/sonarcloud-github-action@master
