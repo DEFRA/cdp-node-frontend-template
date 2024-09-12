@@ -11,7 +11,7 @@ export const secureContext = {
     name: 'secure-context',
     register(server) {
       if (config.get('enableSecureContext')) {
-        const originalCreateSecureContext = tls.createSecureContext
+        const originalTlsCreateSecureContext = tls.createSecureContext
 
         tls.createSecureContext = function (options = {}) {
           const trustStoreCerts = getTrustStoreCerts(process.env)
@@ -20,13 +20,13 @@ export const secureContext = {
             server.logger.info('Could not find any TRUSTSTORE_ certificates')
           }
 
-          const secureContext = originalCreateSecureContext(options)
+          const tlsSecureContext = originalTlsCreateSecureContext(options)
 
           trustStoreCerts.forEach((cert) => {
-            secureContext.context.addCACert(cert)
+            tlsSecureContext.context.addCACert(cert)
           })
 
-          return secureContext
+          return tlsSecureContext
         }
 
         // @ts-expect-error TS2769
