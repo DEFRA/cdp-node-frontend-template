@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { readFileSync } from 'node:fs'
 
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
 import { buildNavigation } from '~/src/config/nunjucks/context/build-navigation.js'
 

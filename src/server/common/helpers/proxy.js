@@ -2,7 +2,7 @@ import { URL } from 'node:url'
 import { ProxyAgent } from 'undici'
 import { HttpsProxyAgent } from 'https-proxy-agent'
 
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
 
 const logger = createLogger()

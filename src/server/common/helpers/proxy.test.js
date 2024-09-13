@@ -1,7 +1,7 @@
 import nock from 'nock'
 import { ProxyAgent } from 'undici'
 
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
 import { provideProxy, proxyFetch } from '~/src/server/common/helpers/proxy.js'
 
 const mockLoggerDebug = jest.fn()

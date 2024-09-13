@@ -1,4 +1,4 @@
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
 
 import { createServer } from '~/src/server/index.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
