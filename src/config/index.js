@@ -95,13 +95,13 @@ export const config = convict({
     default: null,
     env: 'CDP_HTTPS_PROXY'
   }),
-  enableSecureContext: {
+  isSecureContextEnabled: {
     doc: 'Enable Secure Context',
     format: Boolean,
     default: isProduction,
     env: 'ENABLE_SECURE_CONTEXT'
   },
-  metricsIsEnabled: {
+  isMetricsEnabled: {
     doc: 'Enable metrics reporting',
     format: Boolean,
     default: isProduction,

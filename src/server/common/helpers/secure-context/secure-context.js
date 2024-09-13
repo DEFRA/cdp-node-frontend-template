@@ -10,7 +10,7 @@ export const secureContext = {
   plugin: {
     name: 'secure-context',
     register(server) {
-      if (config.get('enableSecureContext')) {
+      if (config.get('isSecureContextEnabled')) {
         const originalTlsCreateSecureContext = tls.createSecureContext
 
         tls.createSecureContext = function (options = {}) {
