@@ -26,8 +26,10 @@ function provideProxy() {
   }
 
   const url = new URL(proxyUrl)
+  const httpPort = 80
+  const httpsPort = 443
   // The url.protocol value always has a colon at the end
-  const port = url.protocol.toLowerCase() === 'http:' ? 80 : 443
+  const port = url.protocol.toLowerCase() === 'http:' ? httpPort : httpsPort
 
   logger.debug(`Proxy set up using ${url.origin}:${port}`)
 

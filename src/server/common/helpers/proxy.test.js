@@ -14,6 +14,9 @@ const mockConfig = jest.mocked(config)
 const fetchSpy = jest.spyOn(global, 'fetch')
 const httpProxyUrl = 'http://proxy.example.com'
 const httpsProxyUrl = 'https://proxy.example.com'
+const httpPort = 80
+const httpsPort = 443
+const statusCodeOk = 200
 
 describe('#provideProxy', () => {
   describe('When a Proxy URL has not been set', () => {
@@ -33,12 +36,12 @@ describe('#provideProxy', () => {
 
     test('Should make expected set up message', () => {
       expect(mockLoggerDebug).toHaveBeenCalledWith(
-        `Proxy set up using ${httpProxyUrl}:80`
+        `Proxy set up using ${httpProxyUrl}:${httpPort}`
       )
     })
 
     test('Should set the correct port for HTTP', () => {
-      expect(result).toHaveProperty('port', 80)
+      expect(result).toHaveProperty('port', httpPort)
     })
 
     test('Should return expected HTTP Proxy object', () => {
@@ -58,12 +61,12 @@ describe('#provideProxy', () => {
 
     test('Should call debug with expected message', () => {
       expect(mockLoggerDebug).toHaveBeenCalledWith(
-        `Proxy set up using ${httpsProxyUrl}:443`
+        `Proxy set up using ${httpsProxyUrl}:${httpsPort}`
       )
     })
 
     test('Should set the correct port for HTTPS', () => {
-      expect(result).toHaveProperty('port', 443)
+      expect(result).toHaveProperty('port', httpsPort)
     })
 
     test('Should return expected HTTPS Proxy object', () => {
@@ -79,7 +82,7 @@ describe('#proxyFetch', () => {
 
   test('Should pass options through', async () => {
     mockConfig.get.mockReturnValue(null)
-    nock(secureUrl).get('/').reply(200, 'OK')
+    nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
     await proxyFetch(secureUrl, { method: 'GET' })
 
@@ -89,7 +92,7 @@ describe('#proxyFetch', () => {
   describe('When no Proxy is configured', () => {
     test('Should fetch without Proxy Agent', async () => {
       mockConfig.get.mockReturnValue(null)
-      nock(secureUrl).get('/').reply(200, 'OK')
+      nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
       await proxyFetch(secureUrl, {})
 
@@ -100,7 +103,7 @@ describe('#proxyFetch', () => {
   describe('When proxy is configured', () => {
     beforeEach(async () => {
       mockConfig.get.mockReturnValue(httpsProxyUrl)
-      nock(secureUrl).get('/').reply(200, 'OK')
+      nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
       await proxyFetch(secureUrl, {})
     })
@@ -117,14 +120,14 @@ describe('#proxyFetch', () => {
     test('Should make expected set up message', () => {
       expect(mockLoggerDebug).toHaveBeenNthCalledWith(
         1,
-        `Proxy set up using ${httpsProxyUrl}:443`
+        `Proxy set up using ${httpsProxyUrl}:${httpsPort}`
       )
     })
 
     test('Should make expected fetching via the proxy message', () => {
       expect(mockLoggerDebug).toHaveBeenNthCalledWith(
         2,
-        `Fetching: ${secureUrl.toString()} via the proxy: ${httpsProxyUrl}:${443}`
+        `Fetching: ${secureUrl.toString()} via the proxy: ${httpsProxyUrl}:${httpsPort}`
       )
     })
   })
