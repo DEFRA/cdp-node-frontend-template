@@ -2,7 +2,7 @@ import { createServer } from '~/src/server/index.js'
 import { statusCodes } from '~/src/server/common/constants/status-codes.js'
 import { catchAll } from '~/src/server/common/helpers/errors.js'
 
-describe('#errors Server', () => {
+describe('#errors', () => {
   /** @type {Server} */
   let server
 
@@ -32,7 +32,7 @@ describe('#catchAll', () => {
   const mockErrorLogger = jest.fn()
   const mockStack = 'Mock error stack'
   const errorPage = 'error/index'
-  const mockRequest = (statusCode) => ({
+  const mockRequest = (/** @type {number} */ statusCode) => ({
     response: {
       isBoom: true,
       stack: mockStack,

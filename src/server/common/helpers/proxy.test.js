@@ -8,9 +8,7 @@ const mockLoggerDebug = jest.fn()
 jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
   createLogger: () => ({ debug: (...args) => mockLoggerDebug(...args) })
 }))
-jest.mock('~/src/config/index.js')
 
-const mockConfig = jest.mocked(config)
 const fetchSpy = jest.spyOn(global, 'fetch')
 const httpProxyUrl = 'http://proxy.example.com'
 const httpsProxyUrl = 'https://proxy.example.com'
@@ -21,7 +19,8 @@ const statusCodeOk = 200
 describe('#provideProxy', () => {
   describe('When a Proxy URL has not been set', () => {
     test('Should return null', () => {
-      mockConfig.get.mockReturnValue(null)
+      config.set('httpProxy', null)
+      config.set('httpsProxy', null)
       expect(provideProxy()).toBeNull()
     })
   })
@@ -30,7 +29,7 @@ describe('#provideProxy', () => {
     let result
 
     beforeEach(() => {
-      mockConfig.get.mockReturnValue(httpProxyUrl)
+      config.set('httpProxy', httpProxyUrl)
       result = provideProxy()
     })
 
@@ -55,7 +54,7 @@ describe('#provideProxy', () => {
     let result
 
     beforeEach(() => {
-      mockConfig.get.mockReturnValue(httpsProxyUrl)
+      config.set('httpsProxy', httpsProxyUrl)
       result = provideProxy()
     })
 
@@ -81,7 +80,8 @@ describe('#proxyFetch', () => {
   const secureUrl = 'https://beepboopbeep.com'
 
   test('Should pass options through', async () => {
-    mockConfig.get.mockReturnValue(null)
+    config.set('httpProxy', null)
+    config.set('httpsProxy', null)
     nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
     await proxyFetch(secureUrl, { method: 'GET' })
@@ -91,7 +91,8 @@ describe('#proxyFetch', () => {
 
   describe('When no Proxy is configured', () => {
     test('Should fetch without Proxy Agent', async () => {
-      mockConfig.get.mockReturnValue(null)
+      config.set('httpProxy', null)
+      config.set('httpsProxy', null)
       nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
       await proxyFetch(secureUrl, {})
@@ -102,7 +103,7 @@ describe('#proxyFetch', () => {
 
   describe('When proxy is configured', () => {
     beforeEach(async () => {
-      mockConfig.get.mockReturnValue(httpsProxyUrl)
+      config.set('httpProxy', httpsProxyUrl)
       nock(secureUrl).get('/').reply(statusCodeOk, 'OK')
 
       await proxyFetch(secureUrl, {})

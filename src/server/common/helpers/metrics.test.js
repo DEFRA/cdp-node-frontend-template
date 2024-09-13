@@ -17,16 +17,14 @@ jest.mock('aws-embedded-metrics', () => ({
 jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
   createLogger: () => ({ error: (...args) => mockLoggerError(...args) })
 }))
-jest.mock('~/src/config/index.js')
 
-const mockConfig = jest.mocked(config)
 const mockMetricsName = 'mock-metrics-name'
 const mockValue = 200
 
 describe('#metrics', () => {
   describe('When metrics is not enabled', () => {
     beforeEach(async () => {
-      mockConfig.get.mockReturnValue(false)
+      config.set('isMetricsEnabled', false)
       await metricsCounter(mockMetricsName, mockValue)
     })
 
@@ -41,7 +39,7 @@ describe('#metrics', () => {
 
   describe('When metrics is enabled', () => {
     beforeEach(async () => {
-      mockConfig.get.mockReturnValue(true)
+      config.set('isMetricsEnabled', true)
       await metricsCounter(mockMetricsName, mockValue)
     })
 
@@ -63,7 +61,7 @@ describe('#metrics', () => {
     const mockError = 'mock-metrics-put-error'
 
     beforeEach(async () => {
-      mockConfig.get.mockReturnValue(true)
+      config.set('isMetricsEnabled', true)
       mockFlush.mockRejectedValue(new Error(mockError))
 
       await metricsCounter(mockMetricsName, mockValue)
