@@ -20,13 +20,14 @@ jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
 jest.mock('~/src/config/index.js')
 
 const mockConfig = jest.mocked(config)
+const mockMetricsName = 'mock-metrics-name'
 const mockValue = 200
 
 describe('#metrics', () => {
   describe('When metrics is not enabled', () => {
     beforeEach(async () => {
       mockConfig.get.mockReturnValue(false)
-      await metricsCounter('mock-metrics-name', mockValue)
+      await metricsCounter(mockMetricsName, mockValue)
     })
 
     test('Should not call metric', () => {
@@ -41,12 +42,12 @@ describe('#metrics', () => {
   describe('When metrics is enabled', () => {
     beforeEach(async () => {
       mockConfig.get.mockReturnValue(true)
-      await metricsCounter('mock-metrics-name', mockValue)
+      await metricsCounter(mockMetricsName, mockValue)
     })
 
     test('Should send metric', () => {
       expect(mockPutMetric).toHaveBeenCalledWith(
-        'mock-metrics-name',
+        mockMetricsName,
         mockValue,
         Unit.Count,
         StorageResolution.Standard
@@ -59,18 +60,17 @@ describe('#metrics', () => {
   })
 
   describe('When metrics throws', () => {
+    const mockError = 'mock-metrics-put-error'
+
     beforeEach(async () => {
       mockConfig.get.mockReturnValue(true)
-      mockFlush.mockRejectedValue(new Error('mock-metrics-put-error'))
+      mockFlush.mockRejectedValue(new Error(mockError))
 
-      await metricsCounter('mock-metrics-name', mockValue)
+      await metricsCounter(mockMetricsName, mockValue)
     })
 
     test('Should log expected error', () => {
-      expect(mockLoggerError).toHaveBeenCalledWith(
-        Error('mock-metrics-put-error'),
-        'mock-metrics-put-error'
-      )
+      expect(mockLoggerError).toHaveBeenCalledWith(Error(mockError), mockError)
     })
   })
 })
