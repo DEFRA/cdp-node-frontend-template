@@ -10,7 +10,7 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  */
 
 /**
- * @param {Engine} engine
+ * @param {Engine} [engine]
  * @returns CatboxRedis | CatboxMemory
  */
 export function getCacheEngine(engine) {
