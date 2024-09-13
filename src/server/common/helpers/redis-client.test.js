@@ -22,7 +22,7 @@ describe('#getCacheEngine', () => {
       getCacheEngine('redis')
     })
 
-    test('Should log expected message', () => {
+    test('Should log expected Redis message', () => {
       expect(mockLoggerInfo).toHaveBeenCalledWith('Using Redis session cache')
     })
 
@@ -36,7 +36,7 @@ describe('#getCacheEngine', () => {
       getCacheEngine()
     })
 
-    test('Should log expected message', () => {
+    test('Should log expected CatBox memory message', () => {
       expect(mockLoggerInfo).toHaveBeenCalledWith(
         'Using Catbox Memory session cache'
       )
