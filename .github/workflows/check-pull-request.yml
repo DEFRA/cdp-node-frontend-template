@@ -19,7 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Test, lint and format code
+      - name: Test code and Create Test Coverage Reports
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -30,7 +30,7 @@ jobs:
           npm run lint
           npm test
 
-      - name: Build Docker Image
+      - name: Test Docker Image Build
         run: |
           set +e
           docker build --no-cache --tag cdp-node-frontend-template .
