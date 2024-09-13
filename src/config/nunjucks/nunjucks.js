@@ -40,7 +40,7 @@ export const nunjucksConfig = {
          */
         compile(src, options) {
           const template = nunjucks.compile(src, options.environment)
-          return (context) => template.render(context)
+          return (ctx) => template.render(ctx)
         }
       }
     },
