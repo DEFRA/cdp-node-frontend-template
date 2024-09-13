@@ -1,47 +1,71 @@
-import { Cluster, Redis } from 'ioredis'
+import { Engine as CatboxRedis } from '@hapi/catbox-redis'
+import { Engine as CatboxMemory } from '@hapi/catbox-memory'
 
-import { config } from '~/src/config/index.js'
-import { buildRedisClient } from '~/src/server/common/helpers/redis-client.js'
+import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
+import { config } from '~/src/config/config.js'
 
-jest.mock('ioredis', () => ({
-  ...jest.requireActual('ioredis'),
-  Cluster: jest.fn().mockReturnValue({ on: () => ({}) }),
-  Redis: jest.fn().mockReturnValue({ on: () => ({}) })
+const mockLoggerInfo = jest.fn()
+const mockLoggerError = jest.fn()
+
+jest.mock('@hapi/catbox-redis')
+jest.mock('@hapi/catbox-memory')
+jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
+  createLogger: () => ({
+    info: (...args) => mockLoggerInfo(...args),
+    error: (...args) => mockLoggerError(...args)
+  })
 }))
 
-describe('#buildRedisClient', () => {
-  describe('When Redis Single InstanceCache is requested', () => {
+describe('#getCacheEngine', () => {
+  describe('When Redis cache engine has been requested', () => {
     beforeEach(() => {
-      buildRedisClient(config.get('redis'))
+      getCacheEngine('redis')
     })
 
-    test('Should instantiate a single Redis client', () => {
-      expect(Redis).toHaveBeenCalledWith({
-        db: 0,
-        host: '127.0.0.1',
-        keyPrefix: 'cdp-node-frontend-template:',
-        port: 6379
-      })
+    test('Should setup Redis cache', () => {
+      expect(CatboxRedis).toHaveBeenCalledWith(expect.any(Object))
+    })
+
+    test('Should log expected Redis message', () => {
+      expect(mockLoggerInfo).toHaveBeenCalledWith('Using Redis session cache')
     })
   })
 
-  describe('When a Redis Cluster is requested', () => {
+  describe('When In memory cache engine has been requested', () => {
     beforeEach(() => {
-      buildRedisClient({
-        ...config.get('redis'),
-        useSingleInstanceCache: false
-      })
+      getCacheEngine()
     })
 
-    test('Should instantiate a Redis Cluster client', () => {
-      expect(Cluster).toHaveBeenCalledWith(
-        [{ host: '127.0.0.1', port: 6379 }],
-        {
-          dnsLookup: expect.any(Function),
-          keyPrefix: 'cdp-node-frontend-template:',
-          redisOptions: { db: 0, password: '', tls: {}, username: '' },
-          slotsRefreshTimeout: 10000
-        }
+    test('Should setup In memory cache', () => {
+      expect(CatboxMemory).toHaveBeenCalledTimes(1)
+    })
+
+    test('Should log expected CatBox memory message', () => {
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        'Using Catbox Memory session cache'
+      )
+    })
+  })
+
+  describe('When In memory cache engine has been requested in Production', () => {
+    beforeEach(() => {
+      config.set('isProduction', true)
+      getCacheEngine()
+    })
+
+    test('Should log Production warning message', () => {
+      expect(mockLoggerError).toHaveBeenCalledWith(
+        'Catbox Memory is for local development only, it should not be used in production!'
+      )
+    })
+
+    test('Should setup In memory cache', () => {
+      expect(CatboxMemory).toHaveBeenCalledTimes(1)
+    })
+
+    test('Should log expected message', () => {
+      expect(mockLoggerInfo).toHaveBeenCalledWith(
+        'Using Catbox Memory session cache'
       )
     })
   })

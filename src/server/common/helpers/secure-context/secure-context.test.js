@@ -13,20 +13,26 @@ jest.mock('node:tls', () => ({
   ...jest.requireActual('node:tls'),
   createSecureContext: (...args) => mockTlsCreateSecureContext(...args)
 }))
+// TODO can this become a manual mock?
+jest.mock('hapi-pino', () => ({
+  register: (server) => {
+    server.decorate('server', 'logger', {
+      info: jest.fn(),
+      error: jest.fn()
+    })
+  },
+  name: 'mock-hapi-pino'
+}))
 
 describe('#secureContext', () => {
   /** @type {Server & {secureContext?: {}}} */
   let server
-  let loggerSpy
 
   describe('When secure context is disabled', () => {
     beforeEach(async () => {
       config.set('isSecureContextEnabled', false)
       server = hapi.server()
-      await server.register(requestLogger)
-
-      loggerSpy = jest.spyOn(server.logger, 'info')
-      await server.register(secureContext)
+      await server.register([requestLogger, secureContext])
     })
 
     afterEach(async () => {
@@ -34,7 +40,7 @@ describe('#secureContext', () => {
     })
 
     test('secureContext decorator should not be available', () => {
-      expect(loggerSpy).toHaveBeenCalledWith(
+      expect(server.logger.info).toHaveBeenCalledWith(
         'Custom secure context is disabled'
       )
     })
@@ -78,6 +84,24 @@ describe('#secureContext', () => {
       expect(server.secureContext).toEqual({
         context: { addCACert: expect.any(Function) }
       })
+    })
+  })
+
+  describe('When secure context is enabled without TRUSTSTORE_ certs', () => {
+    beforeEach(async () => {
+      config.set('isSecureContextEnabled', true)
+      server = hapi.server()
+      await server.register([requestLogger, secureContext])
+    })
+
+    afterEach(async () => {
+      await server.stop({ timeout: 0 })
+    })
+
+    test('Should log about not finding any TRUSTSTORE_ certs', () => {
+      expect(server.logger.info).toHaveBeenCalledWith(
+        'Could not find any TRUSTSTORE_ certificates'
+      )
     })
   })
 })
