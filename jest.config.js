@@ -11,7 +11,6 @@ export default {
   reporters: ['default', ['github-actions', { silent: false }], 'summary'],
   collectCoverageFrom: ['src/**/*.js'],
   coveragePathIgnorePatterns: [
-    'index.js',
     '<rootDir>/node_modules/',
     '<rootDir>/.server',
     '<rootDir>/.public',
