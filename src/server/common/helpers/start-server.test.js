@@ -6,7 +6,6 @@ import { startServer } from '~/src/server/common/helpers/start-server.js'
 const mockLoggerInfo = jest.fn()
 const mockLoggerError = jest.fn()
 
-// TODO can this become a manual mock?
 jest.mock('hapi-pino', () => ({
   register: (server) => {
     server.decorate('server', 'logger', {

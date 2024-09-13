@@ -9,11 +9,6 @@ const mockTlsCreateSecureContext = jest
   .fn()
   .mockReturnValue({ context: { addCACert: mockAddCACert } })
 
-jest.mock('node:tls', () => ({
-  ...jest.requireActual('node:tls'),
-  createSecureContext: (...args) => mockTlsCreateSecureContext(...args)
-}))
-// TODO can this become a manual mock?
 jest.mock('hapi-pino', () => ({
   register: (server) => {
     server.decorate('server', 'logger', {
@@ -23,9 +18,12 @@ jest.mock('hapi-pino', () => ({
   },
   name: 'mock-hapi-pino'
 }))
+jest.mock('node:tls', () => ({
+  ...jest.requireActual('node:tls'),
+  createSecureContext: (...args) => mockTlsCreateSecureContext(...args)
+}))
 
 describe('#secureContext', () => {
-  /** @type {Server & {secureContext?: {}}} */
   let server
 
   describe('When secure context is disabled', () => {
@@ -105,7 +103,3 @@ describe('#secureContext', () => {
     })
   })
 })
-
-/**
- * @import { Server } from '@hapi/hapi'
- */
