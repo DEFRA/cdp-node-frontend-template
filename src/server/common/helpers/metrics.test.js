@@ -19,6 +19,7 @@ jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
 }))
 
 const mockMetricsName = 'mock-metrics-name'
+const defaultMetricsValue = 1
 const mockValue = 200
 
 describe('#metrics', () => {
@@ -38,12 +39,24 @@ describe('#metrics', () => {
   })
 
   describe('When metrics is enabled', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       config.set('isMetricsEnabled', true)
-      await metricsCounter(mockMetricsName, mockValue)
     })
 
-    test('Should send metric', () => {
+    test('Should send metric with default value', async () => {
+      await metricsCounter(mockMetricsName)
+
+      expect(mockPutMetric).toHaveBeenCalledWith(
+        mockMetricsName,
+        defaultMetricsValue,
+        Unit.Count,
+        StorageResolution.Standard
+      )
+    })
+
+    test('Should send metric', async () => {
+      await metricsCounter(mockMetricsName, mockValue)
+
       expect(mockPutMetric).toHaveBeenCalledWith(
         mockMetricsName,
         mockValue,
@@ -52,7 +65,8 @@ describe('#metrics', () => {
       )
     })
 
-    test('Should not call flush', () => {
+    test('Should not call flush', async () => {
+      await metricsCounter(mockMetricsName, mockValue)
       expect(mockFlush).toHaveBeenCalled()
     })
   })
