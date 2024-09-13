@@ -13,9 +13,13 @@ describe('#formatDate', () => {
 
   describe('With defaults', () => {
     test('Date should be in expected format', () => {
-      expect(formatDate('2022-01-17T11:40:02.242Z')).toBe(
-        'Mon 17th January 2022'
-      )
+      expect(formatDate('2023-04-08T11:40:02.242Z')).toBe('Sat 8th April 2023')
+    })
+  })
+
+  describe('With Date object', () => {
+    test('Date should be in expected format', () => {
+      expect(formatDate(new Date())).toBe('Sat 1st April 2023')
     })
   })
 
@@ -23,10 +27,10 @@ describe('#formatDate', () => {
     test('Date should be in provided format', () => {
       expect(
         formatDate(
-          '2022-01-17T11:40:02.242Z',
+          '2023-04-08T11:40:02.242Z',
           "h:mm aaa 'on' EEEE do MMMM yyyy"
         )
-      ).toBe('11:40 am on Monday 17th January 2022')
+      ).toBe('12:40 pm on Saturday 8th April 2023')
     })
   })
 })
