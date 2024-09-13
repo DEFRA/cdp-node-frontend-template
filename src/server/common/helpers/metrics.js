@@ -3,24 +3,33 @@ import {
   Unit,
   StorageResolution
 } from 'aws-embedded-metrics'
+
 import { config } from '~/src/config/index.js'
 import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
 
 /**
+ * Aws embedded metrics wrapper
  * @param {string} metricName
  * @param {number} value
+ * @returns {Promise<void>}
  */
-export async function counter(metricName, value = 1) {
-  const logger = createLogger()
-  if (!config.get('metricsIsEnabled')) {
+export async function metricsCounter(metricName, value = 1) {
+  const isMetricsEnabled = config.get('isMetricsEnabled')
+
+  if (!isMetricsEnabled) {
     return
   }
 
   try {
-    const metrics = createMetricsLogger()
-    metrics.putMetric(metricName, value, Unit.Count, StorageResolution.Standard)
-    await metrics.flush()
-  } catch (e) {
-    logger.warn(e)
+    const metricsLogger = createMetricsLogger()
+    metricsLogger.putMetric(
+      metricName,
+      value,
+      Unit.Count,
+      StorageResolution.Standard
+    )
+    await metricsLogger.flush()
+  } catch (error) {
+    createLogger().error(error, error.message)
   }
 }
