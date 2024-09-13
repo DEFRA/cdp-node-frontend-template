@@ -14,7 +14,6 @@ export default {
     '<rootDir>/node_modules/',
     '<rootDir>/.server',
     '<rootDir>/.public',
-    '<rootDir>/src/__fixtures__',
     '<rootDir>/src/server/common/test-helpers'
   ],
   coverageDirectory: '<rootDir>/coverage'
