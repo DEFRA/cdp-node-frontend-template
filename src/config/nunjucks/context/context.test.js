@@ -69,6 +69,31 @@ describe('#context', () => {
     })
   })
 
+  describe('When webpack manifest file read fails', () => {
+    let contextImport
+
+    beforeAll(async () => {
+      contextImport = await import('~/src/config/nunjucks/context/context.js')
+    })
+
+    beforeEach(() => {
+      mockReadFileSync.mockReturnValue(new Error('File not found'))
+
+      contextResult = contextImport.context(mockRequest)
+    })
+
+    test('Should log that the Webpack Manifest file is not available', () => {
+      expect(mockLoggerError).toHaveBeenCalledWith(
+        'Webpack assets-manifest.json not found'
+      )
+    })
+  })
+})
+
+describe('#context cache', () => {
+  const mockRequest = { path: '/' }
+  let contextResult
+
   describe('Webpack manifest file cache', () => {
     let contextImport
 
@@ -114,26 +139,6 @@ describe('#context', () => {
         serviceName: 'CDP Node.js Frontend Template',
         serviceUrl: '/'
       })
-    })
-  })
-
-  describe('When webpack manifest file read fails', () => {
-    let contextImport
-
-    beforeAll(async () => {
-      contextImport = await import('~/src/config/nunjucks/context/context.js')
-    })
-
-    beforeEach(() => {
-      mockReadFileSync.mockReturnValue(new Error('File not found'))
-
-      contextResult = contextImport.context(mockRequest)
-    })
-
-    test('Should log that the Webpack Manifest file is not available', () => {
-      expect(mockLoggerError).toHaveBeenCalledWith(
-        'Webpack assets-manifest.json not found'
-      )
     })
   })
 })
