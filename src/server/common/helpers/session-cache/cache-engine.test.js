@@ -7,6 +7,11 @@ import { config } from '~/src/config/config.js'
 const mockLoggerInfo = jest.fn()
 const mockLoggerError = jest.fn()
 
+jest.mock('ioredis', () => ({
+  ...jest.requireActual('ioredis'),
+  Cluster: jest.fn().mockReturnValue({ on: () => ({}) }),
+  Redis: jest.fn().mockReturnValue({ on: () => ({}) })
+}))
 jest.mock('@hapi/catbox-redis')
 jest.mock('@hapi/catbox-memory')
 jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
