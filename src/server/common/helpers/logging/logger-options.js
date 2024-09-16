@@ -1,5 +1,5 @@
 import { ecsFormat } from '@elastic/ecs-pino-format'
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
 
 /**
  * @type {{ecs: Omit<LoggerOptions, "mixin"|"transport">, "pino-pretty": {transport: {target: string}}}}

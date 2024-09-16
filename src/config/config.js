@@ -4,9 +4,8 @@ import { fileURLToPath } from 'node:url'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-const oneHour = 1000 * 60 * 60
-const fourHours = oneHour * 4
-const oneWeekMillis = oneHour * 24 * 7
+const fourHoursMs = 14400000
+const oneWeekMs = 604800000
 
 const isProduction = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
@@ -28,7 +27,7 @@ export const config = convict({
   staticCacheTimeout: {
     doc: 'Static cache timeout in milliseconds',
     format: Number,
-    default: oneWeekMillis,
+    default: oneWeekMs,
     env: 'STATIC_CACHE_TIMEOUT'
   },
   serviceName: {
@@ -96,13 +95,13 @@ export const config = convict({
     default: null,
     env: 'CDP_HTTPS_PROXY'
   }),
-  enableSecureContext: {
+  isSecureContextEnabled: {
     doc: 'Enable Secure Context',
     format: Boolean,
     default: isProduction,
     env: 'ENABLE_SECURE_CONTEXT'
   },
-  enableMetrics: {
+  isMetricsEnabled: {
     doc: 'Enable metrics reporting',
     format: Boolean,
     default: isProduction,
@@ -125,7 +124,7 @@ export const config = convict({
       ttl: {
         doc: 'server side session cache ttl',
         format: Number,
-        default: fourHours,
+        default: fourHoursMs,
         env: 'SESSION_CACHE_TTL'
       }
     },
@@ -133,7 +132,7 @@ export const config = convict({
       ttl: {
         doc: 'Session cookie ttl',
         format: Number,
-        default: fourHours,
+        default: fourHoursMs,
         env: 'SESSION_COOKIE_TTL'
       },
       password: {

@@ -14,9 +14,9 @@ ARG PORT_DEBUG
 ENV PORT=${PORT}
 EXPOSE ${PORT} ${PORT_DEBUG}
 
-COPY --chown=node:node package*.json ./
-RUN npm install
-COPY --chown=node:node . .
+COPY --chown=node:node --chmod=755 package*.json ./
+RUN npm install --ignore-scripts
+COPY --chown=node:node --chmod=755 . .
 RUN npm run build
 
 CMD [ "npm", "run", "dev" ]
@@ -34,8 +34,10 @@ ENV TZ="Europe/London"
 # Add curl to template.
 # CDP PLATFORM HEALTHCHECK REQUIREMENT
 USER root
-RUN apk update && \
-    apk add curl
+RUN apk update \
+    && apk add curl \
+    && apk cache clean
+
 USER node
 
 ARG PARENT_VERSION
@@ -45,7 +47,7 @@ COPY --from=production_build /home/node/package*.json ./
 COPY --from=production_build /home/node/.server ./.server/
 COPY --from=production_build /home/node/.public/ ./.public/
 
-RUN npm ci --omit=dev
+RUN npm ci --omit=dev  --ignore-scripts
 
 ARG PORT
 ENV PORT=${PORT}

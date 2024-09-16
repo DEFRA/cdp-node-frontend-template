@@ -3,9 +3,9 @@ import path from 'path'
 import nunjucks from 'nunjucks'
 import hapiVision from '@hapi/vision'
 
-import { config } from '~/src/config/index.js'
-import { context } from './context/index.js'
-import * as filters from './filters/index.js'
+import { config } from '~/src/config/config.js'
+import { context } from './context/context.js'
+import * as filters from './filters/filters.js'
 import * as globals from './globals.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -40,7 +40,7 @@ export const nunjucksConfig = {
          */
         compile(src, options) {
           const template = nunjucks.compile(src, options.environment)
-          return (context) => template.render(context)
+          return (ctx) => template.render(ctx)
         }
       }
     },

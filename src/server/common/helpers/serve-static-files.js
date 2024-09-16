@@ -1,4 +1,5 @@
-import { config } from '~/src/config/index.js'
+import { config } from '~/src/config/config.js'
+import { statusCodes } from '~/src/server/common/constants/status-codes.js'
 
 /**
  * @satisfies {ServerRegisterPluginObject<void>}
@@ -18,8 +19,8 @@ export const serveStaticFiles = {
           },
           method: 'GET',
           path: '/favicon.ico',
-          handler(request, h) {
-            return h.response().code(204).type('image/x-icon')
+          handler(_request, h) {
+            return h.response().code(statusCodes.noContent).type('image/x-icon')
           }
         },
         {

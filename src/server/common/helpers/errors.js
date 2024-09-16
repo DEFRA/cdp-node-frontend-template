@@ -1,15 +1,17 @@
+import { statusCodes } from '~/src/server/common/constants/status-codes.js'
+
 /**
  * @param {number} statusCode
  */
 function statusCodeMessage(statusCode) {
   switch (true) {
-    case statusCode === 404:
+    case statusCode === statusCodes.notFound:
       return 'Page not found'
-    case statusCode === 403:
+    case statusCode === statusCodes.forbidden:
       return 'Forbidden'
-    case statusCode === 401:
+    case statusCode === statusCodes.unauthorized:
       return 'Unauthorized'
-    case statusCode === 400:
+    case statusCode === statusCodes.badRequest:
       return 'Bad Request'
     default:
       return 'Something went wrong'

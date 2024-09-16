@@ -1,7 +1,7 @@
 import { createServer } from '~/src/server/index.js'
 import { statusCodes } from '~/src/server/common/constants/status-codes.js'
 
-describe('#healthController', () => {
+describe('#homeController', () => {
   /** @type {Server} */
   let server
 
@@ -17,10 +17,12 @@ describe('#healthController', () => {
   test('Should provide expected response', async () => {
     const { result, statusCode } = await server.inject({
       method: 'GET',
-      url: '/health'
+      url: '/'
     })
 
-    expect(result).toEqual({ message: 'success' })
+    expect(result).toEqual(
+      expect.stringContaining('Home | CDP Node.js Frontend Template')
+    )
     expect(statusCode).toBe(statusCodes.ok)
   })
 })
