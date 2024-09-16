@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 20
           cache: npm
-        run: |
+      - run: |
           npm ci
           npm run format:check
           npm run lint
