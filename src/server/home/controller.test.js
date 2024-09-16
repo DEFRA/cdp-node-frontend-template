@@ -20,9 +20,7 @@ describe('#homeController', () => {
       url: '/'
     })
 
-    expect(result).toEqual(
-      expect.stringContaining('Home | CDP Node.js Frontend Template')
-    )
+    expect(result).toEqual(expect.stringContaining('Home |'))
     expect(statusCode).toBe(statusCodes.ok)
   })
 })

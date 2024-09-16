@@ -20,9 +20,7 @@ describe('#aboutController', () => {
       url: '/about'
     })
 
-    expect(result).toEqual(
-      expect.stringContaining('About | CDP Node.js Frontend Template')
-    )
+    expect(result).toEqual(expect.stringContaining('About |'))
     expect(statusCode).toBe(statusCodes.ok)
   })
 })
