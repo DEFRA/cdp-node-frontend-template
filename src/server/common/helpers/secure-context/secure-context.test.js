@@ -34,6 +34,7 @@ describe('#secureContext', () => {
     })
 
     afterEach(async () => {
+      config.set('isSecureContextEnabled', false)
       await server.stop({ timeout: 0 })
     })
 
@@ -63,6 +64,7 @@ describe('#secureContext', () => {
     })
 
     afterEach(async () => {
+      config.set('isSecureContextEnabled', false)
       await server.stop({ timeout: 0 })
     })
 
@@ -93,6 +95,7 @@ describe('#secureContext', () => {
     })
 
     afterEach(async () => {
+      config.set('isSecureContextEnabled', false)
       await server.stop({ timeout: 0 })
     })
 
