@@ -6,11 +6,14 @@ import { startServer } from '~/src/server/common/helpers/start-server.js'
 const mockLoggerInfo = jest.fn()
 const mockLoggerError = jest.fn()
 
+const mockHapiLoggerInfo = jest.fn()
+const mockHapiLoggerError = jest.fn()
+
 jest.mock('hapi-pino', () => ({
   register: (server) => {
     server.decorate('server', 'logger', {
-      info: jest.fn(),
-      error: jest.fn()
+      info: mockHapiLoggerInfo,
+      error: mockHapiLoggerError
     })
   },
   name: 'mock-hapi-pino'
@@ -29,55 +32,39 @@ describe('#startServer', () => {
   describe('When server starts', () => {
     let server
 
-    beforeEach(async () => {
-      server = await startServer()
-    })
-
-    afterEach(async () => {
+    afterAll(async () => {
       await server.stop({ timeout: 0 })
     })
 
-    test('Should call createServer', () => {
+    test('Should start up server as expected', async () => {
+      server = await startServer()
+
       expect(createServerSpy).toHaveBeenCalled()
-    })
-
-    test('Should call hapi.server', () => {
       expect(hapiServerSpy).toHaveBeenCalled()
-    })
-
-    test('Should log cache startup message', () => {
       expect(mockLoggerInfo).toHaveBeenCalledWith(
         'Using Catbox Memory session cache'
       )
-    })
-
-    test('Should log server startup messages', () => {
-      expect(server.logger.info).toHaveBeenCalledWith(
+      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
+        'Custom secure context is disabled'
+      )
+      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
         'Server started successfully'
       )
-      expect(server.logger.info).toHaveBeenCalledWith(
+      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
         'Access your frontend on http://localhost:3000'
       )
     })
   })
 
   describe('When server start fails', () => {
-    beforeEach(async () => {
-      await startServer()
+    beforeAll(() => {
       createServerSpy.mockRejectedValue(new Error('Server failed to start'))
     })
 
-    test('Should log cache startup message', () => {
-      expect(mockLoggerInfo).toHaveBeenCalledWith(
-        'Using Catbox Memory session cache'
-      )
-    })
+    test('Should log failed startup message', async () => {
+      await startServer()
 
-    test('Should log server failed to start message', () => {
       expect(mockLoggerInfo).toHaveBeenCalledWith('Server failed to start :(')
-    })
-
-    test('Should log error', () => {
       expect(mockLoggerError).toHaveBeenCalledWith(
         Error('Server failed to start')
       )
