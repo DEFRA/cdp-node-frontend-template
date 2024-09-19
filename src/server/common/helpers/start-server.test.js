@@ -1,8 +1,5 @@
 import hapi from '@hapi/hapi'
 
-import * as serverCreate from '~/src/server/index.js'
-import { startServer } from '~/src/server/common/helpers/start-server.js'
-
 const mockLoggerInfo = jest.fn()
 const mockLoggerError = jest.fn()
 
@@ -26,8 +23,28 @@ jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
 }))
 
 describe('#startServer', () => {
-  const createServerSpy = jest.spyOn(serverCreate, 'createServer')
-  const hapiServerSpy = jest.spyOn(hapi, 'server')
+  const PROCESS_ENV = process.env
+  let createServerSpy
+  let hapiServerSpy
+  let startServerImport
+  let createServerImport
+
+  beforeAll(async () => {
+    process.env = { ...PROCESS_ENV }
+    process.env.PORT = '3097' // Set to obscure port to avoid conflicts
+
+    createServerImport = await import('~/src/server/index.js')
+    startServerImport = await import(
+      '~/src/server/common/helpers/start-server.js'
+    )
+
+    createServerSpy = jest.spyOn(createServerImport, 'createServer')
+    hapiServerSpy = jest.spyOn(hapi, 'server')
+  })
+
+  afterAll(() => {
+    process.env = PROCESS_ENV
+  })
 
   describe('When server starts', () => {
     let server
@@ -37,21 +54,24 @@ describe('#startServer', () => {
     })
 
     test('Should start up server as expected', async () => {
-      server = await startServer()
+      server = await startServerImport.startServer()
 
       expect(createServerSpy).toHaveBeenCalled()
       expect(hapiServerSpy).toHaveBeenCalled()
       expect(mockLoggerInfo).toHaveBeenCalledWith(
         'Using Catbox Memory session cache'
       )
-      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
+      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
+        1,
         'Custom secure context is disabled'
       )
-      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
+      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
+        2,
         'Server started successfully'
       )
-      expect(mockHapiLoggerInfo).toHaveBeenCalledWith(
-        'Access your frontend on http://localhost:3000'
+      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
+        3,
+        'Access your frontend on http://localhost:3097'
       )
     })
   })
@@ -62,7 +82,7 @@ describe('#startServer', () => {
     })
 
     test('Should log failed startup message', async () => {
-      await startServer()
+      await startServerImport.startServer()
 
       expect(mockLoggerInfo).toHaveBeenCalledWith('Server failed to start :(')
       expect(mockLoggerError).toHaveBeenCalledWith(
