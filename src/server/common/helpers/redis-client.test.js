@@ -29,7 +29,10 @@ describe('#buildRedisClient', () => {
     beforeEach(() => {
       buildRedisClient({
         ...config.get('redis'),
-        useSingleInstanceCache: false
+        useSingleInstanceCache: false,
+        useTLS: true,
+        username: 'user',
+        password: 'pass'
       })
     })
 
@@ -39,7 +42,7 @@ describe('#buildRedisClient', () => {
         {
           dnsLookup: expect.any(Function),
           keyPrefix: 'cdp-node-frontend-template:',
-          redisOptions: { db: 0, password: '', tls: {}, username: '' },
+          redisOptions: { db: 0, password: 'pass', tls: {}, username: 'user' },
           slotsRefreshTimeout: 10000
         }
       )

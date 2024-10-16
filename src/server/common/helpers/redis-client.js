@@ -9,6 +9,7 @@ import { createLogger } from '~/src/server/common/helpers/logging/logger.js'
  * @property {string} password
  * @property {string} keyPrefix
  * @property {boolean} useSingleInstanceCache
+ * @property {boolean} useTLS
  */
 
 /**
@@ -27,12 +28,23 @@ export function buildRedisClient(redisConfig) {
   const host = redisConfig.host
   let redisClient
 
+  const credentials =
+    redisConfig.username === ''
+      ? {}
+      : {
+          username: redisConfig.username,
+          password: redisConfig.password
+        }
+  const tls = redisConfig.useTLS ? { tls: {} } : {}
+
   if (redisConfig.useSingleInstanceCache) {
     redisClient = new Redis({
       port,
       host,
       db,
-      keyPrefix
+      keyPrefix,
+      ...credentials,
+      ...tls
     })
   } else {
     redisClient = new Cluster(
@@ -47,10 +59,9 @@ export function buildRedisClient(redisConfig) {
         slotsRefreshTimeout: 10000,
         dnsLookup: (address, callback) => callback(null, address),
         redisOptions: {
-          username: redisConfig.username,
-          password: redisConfig.password,
           db,
-          tls: {}
+          ...credentials,
+          ...tls
         }
       }
     )

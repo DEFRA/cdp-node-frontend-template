@@ -181,6 +181,12 @@ export const config = convict({
       format: Boolean,
       default: !isProduction,
       env: 'USE_SINGLE_INSTANCE_CACHE'
+    },
+    useTLS: {
+      doc: 'Connect to redis using TLS',
+      format: Boolean,
+      default: isProduction,
+      env: 'REDIS_TLS'
     }
   }),
   nunjucks: {
