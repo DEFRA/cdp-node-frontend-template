@@ -12,6 +12,13 @@ const isTest = process.env.NODE_ENV === 'test'
 const isDevelopment = process.env.NODE_ENV === 'development'
 
 export const config = convict({
+  serviceVersion: {
+    doc: 'The service version, this variable is injected into your docker container in CDP environments',
+    format: String,
+    nullable: true,
+    default: null,
+    env: 'SERVICE_VERSION'
+  },
   env: {
     doc: 'The application environment.',
     format: ['production', 'development', 'test'],
@@ -33,7 +40,7 @@ export const config = convict({
   serviceName: {
     doc: 'Applications Service Name',
     format: String,
-    default: 'CDP Node.js Frontend Template'
+    default: 'cdp-node-frontend-template'
   },
   root: {
     doc: 'Project root',
@@ -79,6 +86,13 @@ export const config = convict({
       format: ['ecs', 'pino-pretty'],
       default: isProduction ? 'ecs' : 'pino-pretty',
       env: 'LOG_FORMAT'
+    },
+    redact: {
+      doc: 'Log paths to redact',
+      format: Array,
+      default: isProduction
+        ? ['req.headers.authorization', 'req.headers.cookie', 'res.headers']
+        : ['req', 'res', 'responseTime']
     }
   },
   httpProxy: /** @type {SchemaObj<string | null>} */ ({

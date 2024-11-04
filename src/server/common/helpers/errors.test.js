@@ -22,7 +22,7 @@ describe('#errors', () => {
     })
 
     expect(result).toEqual(
-      expect.stringContaining('Page not found | CDP Node.js Frontend Template')
+      expect.stringContaining('Page not found | cdp-node-frontend-template')
     )
     expect(statusCode).toBe(statusCodes.notFound)
   })
