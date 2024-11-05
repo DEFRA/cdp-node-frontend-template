@@ -1,7 +1,5 @@
 import { ecsFormat } from '@elastic/ecs-pino-format'
 import { config } from '~/src/config/config.js'
-const logConfig = config.get('log')
-const containerVersion = config.get('containerVersion')
 
 /**
  * @type {{ecs: Omit<LoggerOptions, "mixin"|"transport">, "pino-pretty": {transport: {target: string}}}}
@@ -15,15 +13,14 @@ const formatters = {
  * @satisfies {Options}
  */
 export const loggerOptions = {
-  enabled: logConfig.enabled,
+  enabled: config.get('log.enabled'),
   ignorePaths: ['/health'],
-  base: { container_version: containerVersion },
   redact: {
-    paths: logConfig.redact,
+    paths: ['req.headers.authorization', 'req.headers.cookie', 'res.headers'],
     remove: true
   },
-  level: logConfig.level,
-  ...formatters[logConfig.format]
+  level: config.get('log.level'),
+  ...formatters[config.get('log.format')]
 }
 
 /**
