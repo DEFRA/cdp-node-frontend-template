@@ -19,8 +19,8 @@ function statusCodeMessage(statusCode) {
 }
 
 /**
- * @param {Request} request
- * @param {ResponseToolkit} h
+ * @param { Request } request
+ * @param { ResponseToolkit } h
  */
 export function catchAll(request, h) {
   const { response } = request

@@ -108,7 +108,11 @@ export default {
             loader: 'sass-loader',
             options: {
               sassOptions: {
-                loadPaths: [path.join(dirname, 'src/server/common/components')],
+                loadPaths: [
+                  path.join(dirname, 'src/client/stylesheets'),
+                  path.join(dirname, 'src/server/common/components'),
+                  path.join(dirname, 'src/server/common/templates/partials')
+                ],
                 quietDeps: true,
                 sourceMapIncludeSources: true,
                 style: 'expanded'
