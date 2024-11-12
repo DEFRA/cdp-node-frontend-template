@@ -27,7 +27,7 @@ describe('#serveStaticFiles', () => {
       // available for this test. Remove as you see fit
       const { statusCode } = await server.inject({
         method: 'GET',
-        url: '/public/assets/images/govuk-crest.png'
+        url: '/public/assets/images/govuk-crest.svg'
       })
 
       expect(statusCode).toBe(statusCodes.ok)
