@@ -167,7 +167,7 @@ the [.github/example.dependabot.yml](.github/example.dependabot.yml) to `.github
 
 ### SonarCloud
 
-Instructions for setting up SonarCloud can be found in [sonar-project.properties](./sonar-project.properties)
+Instructions for setting up SonarCloud can be found in [sonar-project.properties](./sonar-project.properties).
 
 ## Licence
 
