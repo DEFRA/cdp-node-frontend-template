@@ -44,7 +44,10 @@ export async function createServer() {
           /** @type {Engine} */ (config.get('session.cache.engine'))
         )
       }
-    ]
+    ],
+    state: {
+      strictHeader: false
+    }
   })
 
   await server.register([
