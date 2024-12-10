@@ -5,6 +5,7 @@
  */
 export const aboutController = {
   handler(_request, h) {
+    _request.logger.info('test')
     return h.view('about/index', {
       pageTitle: 'About',
       heading: 'About',
