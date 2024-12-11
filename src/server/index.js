@@ -10,6 +10,7 @@ import { secureContext } from '~/src/server/common/helpers/secure-context/index.
 import { sessionCache } from '~/src/server/common/helpers/session-cache/session-cache.js'
 import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
 import { pulse } from '~/src/server/common/helpers/pulse.js'
+import { requestTracing } from '~/src/server/common/helpers/request-tracing.js'
 
 export async function createServer() {
   const server = hapi.server({
@@ -49,9 +50,9 @@ export async function createServer() {
       strictHeader: false
     }
   })
-
   await server.register([
     requestLogger,
+    requestTracing,
     secureContext,
     pulse,
     sessionCache,

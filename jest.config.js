@@ -21,7 +21,8 @@ export default {
     '<rootDir>/src/index.js',
     'index.js'
   ],
-  coverageDirectory: '<rootDir>/coverage'
+  coverageDirectory: '<rootDir>/coverage',
+  transformIgnorePatterns: ['/node_modules(?!/(@defra/hapi-tracing))'] // ESM only modules
 }
 
 /**
