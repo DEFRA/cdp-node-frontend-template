@@ -11,8 +11,10 @@ import { sessionCache } from '~/src/server/common/helpers/session-cache/session-
 import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
 import { pulse } from '~/src/server/common/helpers/pulse.js'
 import { requestTracing } from '~/src/server/common/helpers/request-tracing.js'
+import { setupProxy } from '~/src/server/common/helpers/proxy/setup-proxy.js'
 
 export async function createServer() {
+  setupProxy()
   const server = hapi.server({
     port: config.get('port'),
     routes: {
