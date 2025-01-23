@@ -60,6 +60,26 @@ matches the service name. e.g. `my-service` will have access to everything in Re
 If your service does not require a session cache to be shared between instances or if you don't require Redis, you can
 disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `~/src/config/index.js`.
 
+## Proxy
+
+We are using forward-proxy which is set up by default. To make use of this: `import { fetch } from 'undici'` then because of the `setGlobalDispatcher(new ProxyAgent(proxyUrl))` calls will use the ProxyAgent Dispatcher
+
+If you are not using Wreck, Axios or Undici or a similar http that uses `Request`. Then you may have to provide the proxy dispatcher:
+
+To add the dispatcher to your own client:
+
+```javascript
+import { ProxyAgent } from 'undici'
+
+return await fetch(url, {
+  dispatcher: new ProxyAgent({
+    uri: proxyUrl,
+    keepAliveTimeout: 10,
+    keepAliveMaxTimeout: 10
+  })
+})
+```
+
 ## Local Development
 
 ### Setup
