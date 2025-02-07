@@ -100,7 +100,7 @@ export const config = convict({
     format: String,
     nullable: true,
     default: null,
-    env: 'CDP_HTTP_PROXY'
+    env: 'HTTP_PROXY'
   }),
   isSecureContextEnabled: {
     doc: 'Enable Secure Context',
