@@ -37,14 +37,14 @@ describe('#context', () => {
         getAssetPath: expect.any(Function),
         navigation: [
           {
-            isActive: true,
+            current: true,
             text: 'Home',
-            url: '/'
+            href: '/'
           },
           {
-            isActive: false,
+            current: false,
             text: 'About',
-            url: '/about'
+            href: '/about'
           }
         ],
         serviceName: 'cdp-node-frontend-template',
@@ -126,14 +126,14 @@ describe('#context cache', () => {
         getAssetPath: expect.any(Function),
         navigation: [
           {
-            isActive: true,
+            current: true,
             text: 'Home',
-            url: '/'
+            href: '/'
           },
           {
-            isActive: false,
+            current: false,
             text: 'About',
-            url: '/about'
+            href: '/about'
           }
         ],
         serviceName: 'cdp-node-frontend-template',
