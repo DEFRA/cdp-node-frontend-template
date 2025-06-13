@@ -4,7 +4,7 @@ import nunjucks from 'nunjucks'
 import { load } from 'cheerio'
 import { camelCase } from 'lodash'
 import * as filters from '~/src/config/nunjucks/filters/filters.js'
-import * as globals from '~/src/config/nunjucks/globals.js'
+import * as globals from '~/src/config/nunjucks/globals/globals.js'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const nunjucksTestEnv = nunjucks.configure(
