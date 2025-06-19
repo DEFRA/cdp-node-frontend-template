@@ -5,6 +5,5 @@ const fetchMock = createFetchMock(vi)
 
 fetchMock.enableMocks()
 global.fetch = fetchMock
-// globalThis.fetch = fetchMock
 
 vi.mock('ioredis')
