@@ -1,8 +1,5 @@
-import { buildNavigation } from '~/src/config/nunjucks/context/build-navigation.js'
+import { buildNavigation } from './build-navigation.js'
 
-/**
- * @param {Partial<Request>} [options]
- */
 function mockRequest(options) {
   return { ...options }
 }
@@ -40,7 +37,3 @@ describe('#buildNavigation', () => {
     ])
   })
 })
-
-/**
- * @import { Request } from '@hapi/hapi'
- */

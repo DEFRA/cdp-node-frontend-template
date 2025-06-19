@@ -1,20 +1,27 @@
+import { vi } from 'vitest'
+
 import { StorageResolution, Unit } from 'aws-embedded-metrics'
 
-import { config } from '~/src/config/config.js'
-import { metricsCounter } from '~/src/server/common/helpers/metrics.js'
+import { metricsCounter } from './metrics.js'
+import { config } from '../../../config/config.js'
 
-const mockPutMetric = jest.fn()
-const mockFlush = jest.fn()
-const mockLoggerError = jest.fn()
+const mockPutMetric = vi.fn()
+const mockFlush = vi.fn()
+const mockLoggerError = vi.fn()
 
-jest.mock('aws-embedded-metrics', () => ({
-  ...jest.requireActual('aws-embedded-metrics'),
-  createMetricsLogger: () => ({
-    putMetric: mockPutMetric,
-    flush: mockFlush
-  })
-}))
-jest.mock('~/src/server/common/helpers/logging/logger.js', () => ({
+vi.mock(import('aws-embedded-metrics'), async (importOriginal) => {
+  const original = await importOriginal()
+
+  return {
+    ...original,
+    createMetricsLogger: () => ({
+      putMetric: mockPutMetric,
+      flush: mockFlush
+    })
+  }
+})
+
+vi.mock('./logging/logger.js', () => ({
   createLogger: () => ({ error: (...args) => mockLoggerError(...args) })
 }))
 
@@ -86,7 +93,3 @@ describe('#metrics', () => {
     })
   })
 })
-
-/**
- * @import { Server } from '@hapi/hapi'
- */
