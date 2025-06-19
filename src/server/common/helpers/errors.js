@@ -1,8 +1,5 @@
-import { statusCodes } from '~/src/server/common/constants/status-codes.js'
+import { statusCodes } from '../constants/status-codes.js'
 
-/**
- * @param {number} statusCode
- */
 function statusCodeMessage(statusCode) {
   switch (statusCode) {
     case statusCodes.notFound:
@@ -18,10 +15,6 @@ function statusCodeMessage(statusCode) {
   }
 }
 
-/**
- * @param { Request } request
- * @param { ResponseToolkit } h
- */
 export function catchAll(request, h) {
   const { response } = request
 
@@ -44,7 +37,3 @@ export function catchAll(request, h) {
     })
     .code(statusCode)
 }
-
-/**
- * @import { Request, ResponseToolkit } from '@hapi/hapi'
- */

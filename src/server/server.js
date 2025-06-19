@@ -1,21 +1,22 @@
 import path from 'path'
 import hapi from '@hapi/hapi'
 
-import { config } from '~/src/config/config.js'
-import { nunjucksConfig } from '~/src/config/nunjucks/nunjucks.js'
 import { router } from './router.js'
-import { requestLogger } from '~/src/server/common/helpers/logging/request-logger.js'
-import { catchAll } from '~/src/server/common/helpers/errors.js'
-import { secureContext } from '~/src/server/common/helpers/secure-context/index.js'
-import { sessionCache } from '~/src/server/common/helpers/session-cache/session-cache.js'
-import { getCacheEngine } from '~/src/server/common/helpers/session-cache/cache-engine.js'
-import { pulse } from '~/src/server/common/helpers/pulse.js'
-import { requestTracing } from '~/src/server/common/helpers/request-tracing.js'
-import { setupProxy } from '~/src/server/common/helpers/proxy/setup-proxy.js'
+import { config } from '../config/config.js'
+import { pulse } from './common/helpers/pulse.js'
+import { catchAll } from './common/helpers/errors.js'
+import { nunjucksConfig } from '../config/nunjucks/nunjucks.js'
+import { setupProxy } from './common/helpers/proxy/setup-proxy.js'
+import { requestTracing } from './common/helpers/request-tracing.js'
+import { requestLogger } from './common/helpers/logging/request-logger.js'
+import { sessionCache } from './common/helpers/session-cache/session-cache.js'
+import { getCacheEngine } from './common/helpers/session-cache/cache-engine.js'
+import { secureContext } from './common/helpers/secure-context/secure-context.js'
 
 export async function createServer() {
   setupProxy()
   const server = hapi.server({
+    host: config.get('host'),
     port: config.get('port'),
     routes: {
       validate: {
@@ -43,9 +44,7 @@ export async function createServer() {
     cache: [
       {
         name: config.get('session.cache.name'),
-        engine: getCacheEngine(
-          /** @type {Engine} */ (config.get('session.cache.engine'))
-        )
+        engine: getCacheEngine(config.get('session.cache.engine'))
       }
     ],
     state: {
@@ -66,7 +65,3 @@ export async function createServer() {
 
   return server
 }
-
-/**
- * @import {Engine} from '~/src/server/common/helpers/session-cache/cache-engine.js'
- */

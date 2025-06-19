@@ -17,9 +17,6 @@ const govukFrontendPath = path.dirname(
 
 const ruleTypeAssetResource = 'asset/resource'
 
-/**
- * @type {Configuration}
- */
 export default {
   context: path.resolve(dirname, 'src/client'),
   entry: {
@@ -72,21 +69,7 @@ export default {
           browserslistEnv: 'javascripts',
           cacheDirectory: true,
           extends: path.join(dirname, 'babel.config.cjs'),
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                // Apply bug fixes to avoid transforms
-                bugfixes: true,
-
-                // Apply smaller "loose" transforms for browsers
-                loose: true,
-
-                // Skip CommonJS modules transform
-                modules: false
-              }
-            ]
-          ]
+          presets: [['@babel/preset-env']]
         },
 
         // Flag loaded modules as side effect free
@@ -192,7 +175,3 @@ export default {
   },
   target: 'browserslist:javascripts'
 }
-
-/**
- * @import { Configuration } from 'webpack'
- */

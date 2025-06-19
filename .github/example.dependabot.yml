@@ -22,11 +22,9 @@ updates:
 
       lint:
         patterns:
-          - '@typescript-eslint/*'
           - 'prettier'
           - 'stylelint'
           - 'stylelint-*'
-          - 'typescript'
 
       logging:
         patterns:
@@ -37,10 +35,9 @@ updates:
 
       tools:
         patterns:
-          - 'babel-jest'
           - 'husky'
-          - 'jest'
-          - 'jest-*'
+          - 'vitest'
+          - 'vitest-*'
           - 'nodemon'
           - 'npm-run-all'
           - 'lodash'
@@ -55,7 +52,6 @@ updates:
     ignore:
       - dependency-name: 'eslint-*'
       - dependency-name: 'eslint'
-      - dependency-name: '@typescript-eslint/*'
 
     # Schedule run every Monday, local time
     schedule:

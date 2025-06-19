@@ -1,6 +1,6 @@
 import assign from 'lodash/assign.js'
 
-import { formatDate } from '~/src/config/nunjucks/filters/format-date.js'
-import { formatCurrency } from '~/src/config/nunjucks/filters/format-currency.js'
+import { formatDate } from './format-date.js'
+import { formatCurrency } from './format-currency.js'
 
 export { assign, formatDate, formatCurrency }
