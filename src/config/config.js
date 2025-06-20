@@ -2,6 +2,8 @@ import convict from 'convict'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import convictFormatWithValidator from 'convict-format-with-validator'
+
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const fourHoursMs = 14400000
@@ -11,6 +13,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
 const isDevelopment = process.env.NODE_ENV === 'development'
 
+convict.addFormats(convictFormatWithValidator)
+
 export const config = convict({
   serviceVersion: {
     doc: 'The service version, this variable is injected into your docker container in CDP environments',
@@ -19,11 +23,11 @@ export const config = convict({
     default: null,
     env: 'SERVICE_VERSION'
   },
-  env: {
-    doc: 'The application environment.',
-    format: ['production', 'development', 'test'],
-    default: 'development',
-    env: 'NODE_ENV'
+  host: {
+    doc: 'The IP address to bind',
+    format: 'ipaddress',
+    default: '0.0.0.0',
+    env: 'HOST'
   },
   port: {
     doc: 'The port to bind.',
@@ -95,13 +99,13 @@ export const config = convict({
         : []
     }
   },
-  httpProxy: /** @type {SchemaObj<string | null>} */ ({
+  httpProxy: {
     doc: 'HTTP Proxy',
     format: String,
     nullable: true,
     default: null,
     env: 'HTTP_PROXY'
-  }),
+  },
   isSecureContextEnabled: {
     doc: 'Enable Secure Context',
     format: Boolean,
@@ -157,7 +161,7 @@ export const config = convict({
       }
     }
   },
-  redis: /** @type {Schema<RedisConfig>} */ ({
+  redis: {
     host: {
       doc: 'Redis cache host',
       format: String,
@@ -195,7 +199,7 @@ export const config = convict({
       default: isProduction,
       env: 'REDIS_TLS'
     }
-  }),
+  },
   nunjucks: {
     watch: {
       doc: 'Reload templates when they are changed.',
@@ -219,8 +223,3 @@ export const config = convict({
 })
 
 config.validate({ allowed: 'strict' })
-
-/**
- * @import { Schema, SchemaObj } from 'convict'
- * @import { RedisConfig } from '~/src/server/common/helpers/redis-client.js'
- */

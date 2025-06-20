@@ -1,13 +1,10 @@
 import inert from '@hapi/inert'
 
-import { health } from '~/src/server/health/index.js'
-import { home } from '~/src/server/home/index.js'
-import { serveStaticFiles } from '~/src/server/common/helpers/serve-static-files.js'
-import { about } from '~/src/server/about/index.js'
+import { home } from './home/index.js'
+import { about } from './about/index.js'
+import { health } from './health/index.js'
+import { serveStaticFiles } from './common/helpers/serve-static-files.js'
 
-/**
- * @satisfies {ServerRegisterPluginObject<void>}
- */
 export const router = {
   plugin: {
     name: 'router',
@@ -25,7 +22,3 @@ export const router = {
     }
   }
 }
-
-/**
- * @import { ServerRegisterPluginObject } from '@hapi/hapi'
- */

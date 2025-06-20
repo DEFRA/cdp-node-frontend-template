@@ -1,9 +1,10 @@
-import { createServer } from '~/src/server/index.js'
-import { statusCodes } from '~/src/server/common/constants/status-codes.js'
-import { catchAll } from '~/src/server/common/helpers/errors.js'
+import { vi } from 'vitest'
+
+import { catchAll } from './errors.js'
+import { createServer } from '../../server.js'
+import { statusCodes } from '../constants/status-codes.js'
 
 describe('#errors', () => {
-  /** @type {Server} */
   let server
 
   beforeAll(async () => {
@@ -29,10 +30,10 @@ describe('#errors', () => {
 })
 
 describe('#catchAll', () => {
-  const mockErrorLogger = jest.fn()
+  const mockErrorLogger = vi.fn()
   const mockStack = 'Mock error stack'
   const errorPage = 'error/index'
-  const mockRequest = (/** @type {number} */ statusCode) => ({
+  const mockRequest = (statusCode) => ({
     response: {
       isBoom: true,
       stack: mockStack,
@@ -42,8 +43,8 @@ describe('#catchAll', () => {
     },
     logger: { error: mockErrorLogger }
   })
-  const mockToolkitView = jest.fn()
-  const mockToolkitCode = jest.fn()
+  const mockToolkitView = vi.fn()
+  const mockToolkitCode = vi.fn()
   const mockToolkit = {
     view: mockToolkitView.mockReturnThis(),
     code: mockToolkitCode.mockReturnThis()
@@ -123,7 +124,3 @@ describe('#catchAll', () => {
     )
   })
 })
-
-/**
- * @import { Server } from '@hapi/hapi'
- */

@@ -31,7 +31,7 @@ Core delivery platform Node.js Frontend Template.
 
 ### Node.js
 
-Please install [Node.js](http://nodejs.org/) `>= v18` and [npm](https://nodejs.org/) `>= v9`. You will find it
+Please install [Node.js](http://nodejs.org/) `>= v22` and [npm](https://nodejs.org/) `>= v9`. You will find it
 easier to use the Node Version Manager [nvm](https://github.com/creationix/nvm)
 
 To use the correct version of Node.js for this application, via nvm:
@@ -58,13 +58,15 @@ to how services might have a database (or MongoDB). All frontend services are gi
 matches the service name. e.g. `my-service` will have access to everything in Redis that is prefixed with `my-service`.
 
 If your service does not require a session cache to be shared between instances or if you don't require Redis, you can
-disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `~/src/config/index.js`.
+disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `src/config/index.js`.
 
 ## Proxy
 
-We are using forward-proxy which is set up by default. To make use of this: `import { fetch } from 'undici'` then because of the `setGlobalDispatcher(new ProxyAgent(proxyUrl))` calls will use the ProxyAgent Dispatcher
+We are using forward-proxy which is set up by default. To make use of this: `import { fetch } from 'undici'` then
+because of the `setGlobalDispatcher(new ProxyAgent(proxyUrl))` calls will use the ProxyAgent Dispatcher
 
-If you are not using Wreck, Axios or Undici or a similar http that uses `Request`. Then you may have to provide the proxy dispatcher:
+If you are not using Wreck, Axios or Undici or a similar http that uses `Request`. Then you may have to provide the
+proxy dispatcher:
 
 To add the dispatcher to your own client:
 
@@ -139,6 +141,10 @@ git config --global core.autocrlf false
 ## Docker
 
 ### Development image
+
+> [!TIP]
+> For Apple Silicon users, you may need to add `--platform linux/amd64` to the `docker run` command to ensure
+> compatibility fEx: `docker build --platform=linux/arm64 --no-cache --tag cdp-node-frontend-template`
 
 Build:
 

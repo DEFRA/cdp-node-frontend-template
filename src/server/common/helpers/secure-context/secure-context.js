@@ -1,11 +1,10 @@
 import tls from 'node:tls'
 
-import { config } from '~/src/config/config.js'
-import { getTrustStoreCerts } from '~/src/server/common/helpers/secure-context/get-trust-store-certs.js'
+import { config } from '../../../../config/config.js'
+import { getTrustStoreCerts } from './get-trust-store-certs.js'
 
 /**
  * Creates a new secure context loaded from Base64 encoded certs
- * @satisfies {ServerRegisterPluginObject<void>}
  */
 export const secureContext = {
   plugin: {
@@ -37,7 +36,3 @@ export const secureContext = {
     }
   }
 }
-
-/**
- * @import { ServerRegisterPluginObject } from '@hapi/hapi'
- */
