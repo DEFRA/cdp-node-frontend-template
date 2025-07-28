@@ -1,6 +1,7 @@
 import { vi } from 'vitest'
 
 import hapi from '@hapi/hapi'
+import { statusCodes } from '../constants/status-codes.js'
 
 const mockLoggerInfo = vi.fn()
 const mockLoggerError = vi.fn()
@@ -28,15 +29,13 @@ vi.mock('./logging/logger.js', () => ({
 }))
 
 describe('#startServer', () => {
-  const PROCESS_ENV = process.env
   let createServerSpy
   let hapiServerSpy
   let startServerImport
   let createServerImport
 
   beforeAll(async () => {
-    process.env = { ...PROCESS_ENV }
-    process.env.PORT = '3097' // Set to obscure port to avoid conflicts
+    vi.stubEnv('PORT', '3097')
 
     createServerImport = await import('../../server.js')
     startServerImport = await import('./start-server.js')
@@ -46,7 +45,7 @@ describe('#startServer', () => {
   })
 
   afterAll(() => {
-    process.env = PROCESS_ENV
+    vi.unstubAllEnvs()
   })
 
   describe('When server starts', () => {
@@ -61,21 +60,14 @@ describe('#startServer', () => {
 
       expect(createServerSpy).toHaveBeenCalled()
       expect(hapiServerSpy).toHaveBeenCalled()
-      expect(mockLoggerInfo).toHaveBeenCalledWith(
-        'Using Catbox Memory session cache'
-      )
-      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
-        1,
-        'Custom secure context is disabled'
-      )
-      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
-        2,
-        'Server started successfully'
-      )
-      expect(mockHapiLoggerInfo).toHaveBeenNthCalledWith(
-        3,
-        'Access your frontend on http://localhost:3097'
-      )
+
+      const { result, statusCode } = await server.inject({
+        method: 'GET',
+        url: '/health'
+      })
+
+      expect(result).toEqual({ message: 'success' })
+      expect(statusCode).toBe(statusCodes.ok)
     })
   })
 
