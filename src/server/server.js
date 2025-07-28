@@ -11,7 +11,7 @@ import { requestTracing } from './common/helpers/request-tracing.js'
 import { requestLogger } from './common/helpers/logging/request-logger.js'
 import { sessionCache } from './common/helpers/session-cache/session-cache.js'
 import { getCacheEngine } from './common/helpers/session-cache/cache-engine.js'
-import { secureContext } from './common/helpers/secure-context/secure-context.js'
+import { secureContext } from '@defra/hapi-secure-context'
 
 export async function createServer() {
   setupProxy()
