@@ -1,8 +1,8 @@
 import inert from '@hapi/inert'
 
-import { home } from './home/index.js'
-import { about } from './about/index.js'
-import { health } from './health/index.js'
+import { home } from './routes/home/index.js'
+import { about } from './routes/about/index.js'
+import { health } from './routes/health/index.js'
 import { serveStaticFiles } from './common/helpers/serve-static-files.js'
 
 export const router = {
