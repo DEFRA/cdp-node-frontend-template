@@ -18,7 +18,7 @@ export function setupProxy() {
     logger.info('setting up global proxies')
 
     // Undici proxy
-    setGlobalDispatcher(new ProxyAgent(proxyUrl))
+    setGlobalDispatcher(new ProxyAgent({ uri: proxyUrl, allowH2: false }))
 
     // global-agent (axios/request/and others)
     bootstrap()
