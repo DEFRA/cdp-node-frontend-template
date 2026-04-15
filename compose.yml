@@ -1,6 +1,5 @@
 version: '3.4'
 services:
-
   localstack:
     image: localstack/localstack:3.0.2
     ports:
@@ -33,7 +32,7 @@ services:
       - cdp-tenant
 
   mongodb:
-    image: mongo:6.0.13
+    image: mongo:7.0.2
     networks:
       - cdp-tenant
     ports:
@@ -42,7 +41,7 @@ services:
       - mongodb-data:/data
     restart: always
 
-################################################################################
+  ################################################################################
 
   your-frontend:
     build: ./
