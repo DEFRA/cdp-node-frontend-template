@@ -7,31 +7,44 @@ import { createLogger } from '#/server/common/helpers/logging/logger.js'
 
 const logger = createLogger()
 const assetPath = config.get('assetPath')
-const manifestPath = path.join(
-  config.get('root'),
-  '.public/assets-manifest.json'
-)
 
-let webpackManifest
+/**
+ * Get asset path from .public/.vite/manifest.json
+ * @param {string} asset
+ * @returns {string}
+ */
+function getAssetPath(asset) {
+  if (!config.get('isProduction')) {
+    return `${assetPath}/${asset}`
+  }
 
-export function context(request) {
-  if (!webpackManifest) {
+  const manifestPath = path.join(
+    config.get('root'),
+    '.public/.vite/manifest.json'
+  )
+
+  let viteManifest
+
+  if (!viteManifest) {
     try {
-      webpackManifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
+      viteManifest = JSON.parse(readFileSync(manifestPath, 'utf-8'))
     } catch (error) {
-      logger.error(`Webpack ${path.basename(manifestPath)} not found`)
+      logger.error(error, `Vite ${path.basename(manifestPath)} not found`)
     }
   }
 
+  const webpackAssetPath = viteManifest[`${asset}`]?.file ?? ''
+
+  return `${assetPath}/${webpackAssetPath}`
+}
+
+export function context(request) {
   return {
     assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
     breadcrumbs: [],
     navigation: buildNavigation(request),
-    getAssetPath(asset) {
-      const webpackAssetPath = webpackManifest?.[asset]
-      return `${assetPath}/${webpackAssetPath ?? asset}`
-    }
+    getAssetPath
   }
 }
