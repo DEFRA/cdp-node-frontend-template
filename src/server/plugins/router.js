@@ -4,6 +4,7 @@ import { home } from '../routes/home/index.js'
 import { about } from '../routes/about/index.js'
 import { health } from '../routes/health/index.js'
 import { serveStaticFiles } from './serve-static-files.js'
+import { config } from '#/config/config.js'
 
 export const router = {
   plugin: {
@@ -18,7 +19,25 @@ export const router = {
       await server.register([home, about])
 
       // Static assets
-      await server.register([serveStaticFiles])
+      if (!config.get('isProduction') && !config.get('isTest')) {
+        await (async () => {
+          const createViteServer = (await import('vite')).createServer
+          const vite = await createViteServer({
+            server: { middlewareMode: true },
+            appType: 'custom'
+          })
+
+          await server.register({
+            plugin: (await import('@defra/hapi-connect')).default,
+            options: {
+              path: '/public',
+              middleware: [vite.middlewares]
+            }
+          })
+        })()
+      } else {
+        server.register(serveStaticFiles)
+      }
     }
   }
 }
