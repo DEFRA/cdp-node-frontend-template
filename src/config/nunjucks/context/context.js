@@ -34,7 +34,7 @@ export function context(request) {
         return `${assetPath}/${asset}`
       }
 
-      const viteAssetPath = viteManifest?.[asset].file
+      const viteAssetPath = viteManifest?.[asset]?.file
       return `${assetPath}/${viteAssetPath ?? asset}`
     }
   }
