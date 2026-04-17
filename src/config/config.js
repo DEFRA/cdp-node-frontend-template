@@ -96,7 +96,8 @@ export const config = convict({
       format: Array,
       default: isProduction
         ? ['req.headers.authorization', 'req.headers.cookie', 'res.headers']
-        : []
+        : [],
+      env: 'LOG_REDACT'
     }
   },
   httpProxy: {
