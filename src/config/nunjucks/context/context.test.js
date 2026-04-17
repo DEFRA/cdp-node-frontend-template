@@ -14,6 +14,17 @@ vi.mock('node:fs', async () => {
 vi.mock('../../../server/common/helpers/logging/logger.js', () => ({
   createLogger: () => ({ error: (...args) => mockLoggerError(...args) })
 }))
+vi.mock(import('#/config/config.js'), async (importOriginal) => {
+  const originalModule = await importOriginal()
+  return {
+    config: {
+      get(key) {
+        if (key === 'isProduction') return true
+        return originalModule.config.get(key)
+      }
+    }
+  }
+})
 
 describe('context and cache', () => {
   beforeEach(() => {
@@ -25,7 +36,7 @@ describe('context and cache', () => {
   describe('#context', () => {
     const mockRequest = { path: '/' }
 
-    describe('When webpack manifest file read succeeds', () => {
+    describe('When Vite manifest file read succeeds', () => {
       let contextImport
       let contextResult
 
@@ -82,7 +93,7 @@ describe('context and cache', () => {
       })
     })
 
-    describe('When webpack manifest file read fails', () => {
+    describe('When Vite manifest file read fails', () => {
       let contextImport
 
       beforeAll(async () => {
@@ -95,9 +106,9 @@ describe('context and cache', () => {
         contextImport.context(mockRequest)
       })
 
-      test('Should log that the Webpack Manifest file is not available', () => {
+      test('Should log that the Vite Manifest file is not available', () => {
         expect(mockLoggerError).toHaveBeenCalledWith(
-          'Webpack assets-manifest.json not found'
+          'Vite manifest.json not found'
         )
       })
     })
@@ -107,7 +118,7 @@ describe('context and cache', () => {
     const mockRequest = { path: '/' }
     let contextResult
 
-    describe('Webpack manifest file cache', () => {
+    describe('Vite manifest file cache', () => {
       let contextImport
 
       beforeAll(async () => {

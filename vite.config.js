@@ -13,7 +13,7 @@ export default defineConfig({
         applicationCss: 'src/client/stylesheets/application.scss'
       }
     },
-    cssMinify: false
+    sourcemap: true
   },
   css: {
     preprocessorOptions: {
