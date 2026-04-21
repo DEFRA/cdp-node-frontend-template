@@ -1,8 +1,6 @@
 name: Check Pull Request
 
 on:
-  schedule:
-    - cron: '0 7 * * 1'
   pull_request:
     branches:
       - main
@@ -25,15 +23,16 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: npm
+
+      - name: Security audit
+        run: npm run security-audit
+
       - run: |
           npm ci
           npm run build:frontend
           npm run format:check
           npm run lint
           npm test
-
-      - name: Security audit
-        run: npm run security-audit
 
       - name: Test Docker Image Build
         run: |
