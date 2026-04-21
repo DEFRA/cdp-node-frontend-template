@@ -54,9 +54,12 @@ services:
       - 'compose/aws.env'
     environment:
       PORT: 3000
-      NODE_ENV: development
+      NODE_ENV: production
       REDIS_HOST: redis
+      LOG_FORMAT: pino-pretty
+      SESSION_COOKIE_SECURE: false
       USE_SINGLE_INSTANCE_CACHE: true
+      REDIS_TLS: false
     networks:
       - cdp-tenant
 
