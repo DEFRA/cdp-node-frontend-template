@@ -183,7 +183,7 @@ docker run -p 3000:3000 cdp-node-frontend-template
 
 A local environment with:
 
-- Localstack for AWS services (S3, SQS)
+- Floci (replacing Localstack) for AWS services (S3, SQS)
 - Redis
 - MongoDB
 - This service.
