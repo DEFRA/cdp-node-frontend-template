@@ -61,25 +61,15 @@ disable setting `SESSION_CACHE_ENGINE=false` or changing the default value in `s
 
 ## Proxy
 
-We are using forward-proxy which is set up by default. To make use of this: `import { fetch } from 'undici'` then
-because of the `setGlobalDispatcher(new ProxyAgent(proxyUrl))` calls will use the ProxyAgent Dispatcher
+We are using forward-proxy which is set up by default. Services are automatically configured with the proxy environment variables when deployed.
 
-If you are not using Wreck, Axios or Undici or a similar http that uses `Request`. Then you may have to provide the
-proxy dispatcher:
+Node.js 24 uses these variables to route outbound HTTP(S) requests through the proxy:
 
-To add the dispatcher to your own client:
+NODE_USE_ENV_PROXY=1
+HTTPS_PROXY=...
+NO_PROXY=...
 
-```javascript
-import { ProxyAgent } from 'undici'
-
-return await fetch(url, {
-  dispatcher: new ProxyAgent({
-    uri: proxyUrl,
-    keepAliveTimeout: 10,
-    keepAliveMaxTimeout: 10
-  })
-})
-```
+No additional proxy configuration is required in the service.
 
 ## Local Development
 
