@@ -27,6 +27,8 @@ export function context(request) {
     assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
+    cookieName: config.get('cookieConsent.name'),
+    googleTagManagerKey: config.get('googleAnalytics.googleTagManagerKey'),
     breadcrumbs: [],
     navigation: buildNavigation(request),
     getAssetPath(asset) {

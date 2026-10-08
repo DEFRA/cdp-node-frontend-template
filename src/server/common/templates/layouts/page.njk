@@ -18,7 +18,24 @@
 {% endblock %}
 
 {% block head %}
+  {% if cookiesPolicy.analytics %}
+    {% include "../partials/google-tag-manager/head-content.njk" %}
+  {% endif %}
+
   <link href="{{ getAssetPath('src/client/stylesheets/application.scss') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block bodyStart %}
+  {# Show banner only if user hasn't made a choice yet #}
+  {% if not cookiesPolicy.confirmed %}
+    {% include "../partials/cookies/banner.njk" %}
+  {% endif %}
+
+  {# Only load GTM when user has accepted analytics cookies #}
+  {% if cookiesPolicy.analytics %}
+    {% include "../partials/google-tag-manager/body-content.njk" %}
+  {% endif %}
 {% endblock %}
 
 {% block header %}
@@ -60,7 +77,7 @@
           text: "Privacy"
         },
         {
-          href: "https://www.gov.uk/help/cookies",
+          href: "/cookies",
           text: "Cookies"
         },
         {

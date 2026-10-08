@@ -1,0 +1,126 @@
+{#
+  Cookie preferences page.
+
+  This page lets users change their cookie settings after they've
+  already made a choice via the banner. It is linked from:
+  - The cookie banner confirmation message
+  - The footer of every page
+
+  The page shows:
+  1. A success notification when the user has just saved their preferences
+  2. Tables describing what cookies are used and why
+  3. A form with radio buttons to accept or reject analytics cookies
+
+  The form POSTs to /cookies with async: false, so the server processes
+  the change and re-renders this page with the success banner.
+
+  WHY THIS PAGE IS NEEDED:
+  The GOV.UK Service Standard requires that users can change their
+  cookie preferences at any time, not just via the initial banner.
+  The banner is dismissed once confirmed, so this page provides the
+  ongoing mechanism to change preferences.
+#}
+
+
+{% extends 'layouts/page.njk' %}
+
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block content %}
+  {% if updated %}
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          You've set your cookie preferences.
+        </h3>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-l">{{ pageTitle }}</h1>
+
+      <p class="govuk-body">Cookies are small files saved on your phone, tablet or computer when you visit a website.</p>
+
+      <p class="govuk-body">We use cookies to make this site work and collect information about how you use the service.</p>
+
+      <h2 class="govuk-heading-m">Essential cookies</h2>
+
+      <p class="govuk-body">Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.</p>
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--s">Essential cookies we use</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Purpose</th>
+            <th scope="col" class="govuk-table__header">Expires</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">{{ cookieName }}</td>
+            <td class="govuk-table__cell">Saves your cookie consent settings</td>
+            <td class="govuk-table__cell">1 year</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
+
+      <p class="govuk-body">With your permission, we use Google Analytics to collect data about how you use the service. This information helps us to improve our service.</p>
+
+      <p class="govuk-body">Google is not allowed to use or share our analytics data with anyone.</p>
+
+      <p class="govuk-body">Google Analytics stores anonymised information about:</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>how you got to this service</li>
+        <li>the pages you visit on the service and how long you spend on them</li>
+        <li>any errors you see while using this service</li>
+      </ul>
+
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--s">Analytics cookies we use</caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Purpose</th>
+            <th scope="col" class="govuk-table__header">Expires</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">_ga</td>
+            <td class="govuk-table__cell">Checks if you've visited the service before. Helps us count how many people visit our site.</td>
+            <td class="govuk-table__cell">2 years</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">_ga_&lt;container-id&gt;</td>
+            <td class="govuk-table__cell">Used by Google Analytics to persist session state.</td>
+            <td class="govuk-table__cell">2 years</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 class="govuk-heading-m">Change your cookie settings</h2>
+
+      <form action="/cookies" method="post" novalidate>
+        <input type="hidden" name="crumb" value="{{ crumb }}">
+        <input type="hidden" name="async" value="false">
+
+        {{ govukRadios(analytics) }}
+
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+          Save cookie settings
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
