@@ -2,6 +2,7 @@ import { vi } from 'vitest'
 
 const mockReadFileSync = vi.fn()
 const mockLoggerError = vi.fn()
+const mockLoggerWarn = vi.fn()
 
 vi.mock('node:fs', async () => {
   const nodeFs = await import('node:fs')
@@ -12,7 +13,7 @@ vi.mock('node:fs', async () => {
   }
 })
 vi.mock('../../../server/common/helpers/logging/logger.js', () => ({
-  createLogger: () => ({ error: (...args) => mockLoggerError(...args) })
+  createLogger: () => ({ error: mockLoggerError, warn: mockLoggerWarn })
 }))
 vi.mock(import('#/config/config.js'), async (importOriginal) => {
   const originalModule = await importOriginal()
