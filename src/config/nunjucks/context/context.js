@@ -12,6 +12,11 @@ const manifestPath = path.join(
   '.public/.vite/manifest.json'
 )
 
+const googleTagManagerKey = config.get('googleAnalytics.googleTagManagerKey')
+if (!googleTagManagerKey && config.get('isProduction')) {
+  logger.warn('Analytics googleTagManagerKey not set')
+}
+
 let viteManifest
 
 export function context(request) {
@@ -27,6 +32,8 @@ export function context(request) {
     assetPath: `${assetPath}/assets`,
     serviceName: config.get('serviceName'),
     serviceUrl: '/',
+    cookieName: config.get('cookieConsent.name'),
+    googleTagManagerKey,
     breadcrumbs: [],
     navigation: buildNavigation(request),
     getAssetPath(asset) {
