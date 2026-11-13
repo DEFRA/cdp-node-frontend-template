@@ -1,4 +1,6 @@
+import { pino } from 'pino'
 import { ecsFormat } from '@elastic/ecs-pino-format'
+import { setAuditDestination } from '@defra/cdp-auditing'
 import { getTraceId } from '@defra/hapi-tracing'
 
 import { config } from '#/config/config.js'
@@ -35,4 +37,13 @@ export const loggerOptions = {
     }
     return mixinValues
   }
+}
+
+export const logDestination =
+  logConfig.format === 'ecs'
+    ? pino.destination({ fd: 1, sync: false })
+    : undefined
+
+if (logDestination) {
+  setAuditDestination(logDestination)
 }
